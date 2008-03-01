@@ -1,0 +1,82 @@
+
+div.dokuwiki div.linkback_wrapper {
+  background-color: __background_alt__;
+  margin: 1em -1em;
+  padding: 0.5em 1em;
+  clear: both;
+}
+
+div.dokuwiki div.linkback_trackbackurl {
+  font-size: 80%;
+}
+
+div.dokuwiki span.linkback_trackbackurl {
+  font-family: monospace;
+  font-size: 110%;
+}
+
+div.dokuwiki .linkback_head {
+  font-size: 80%;
+  color: __text_neu__;
+  padding-top: 0.5em;
+  margin-top: 1em;
+  clear: both;
+}
+
+div.dokuwiki .linkback_head a.urlextern {
+  background: none;
+  padding: 1px 0px 1px 0px !important;
+  margin-left: 0px;
+}
+
+div.dokuwiki .linkback_head span.sender {
+  padding: 1px 0px 1px 0px;
+}
+
+div.dokuwiki .linkback_head .sender .medialeft {
+	margin: 0px 14px 0px 0px !important;
+}
+
+div.dokuwiki .linkback_head abbr {
+  border-bottom: 0;
+}
+
+div.dokuwiki .linkback_head abbr.received {
+  background: transparent url(images/date.gif) 0px 1px no-repeat;
+  padding: 1px 0px 1px 16px;
+}
+
+div.dokuwiki .linkback_body {
+  padding-top: 0.5em;
+}
+
+div.dokuwiki div.linkback_hidden {
+  opacity: 0.5;
+}
+
+div.dokuwiki div.linkback_buttons {
+  float: right;
+  font-size: 10px;
+  cursor: pointer;
+  display: inline;
+}
+
+div.dokuwiki div.linkback_buttons input.button {
+  border: 1px solid __border__;
+  color: __text__;
+  background-color: __background__;
+  vertical-align: middle;
+  text-decoration: none;
+  padding: 0;
+  margin: 0 0 0 0.5em;
+}
+
+div.dokuwiki div.linkback_line {
+  padding-top: 0.5em;
+  border-bottom: 1px solid __border__;
+}
+
+.dokuwiki #plugin__linkback_wrapper {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
