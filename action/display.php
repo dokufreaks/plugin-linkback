@@ -208,7 +208,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
 
         echo $this->external_link($url, ($linkback['blog_title'] ? $linkback['blog_title'] . ': ' : '') . $title, 'urlextern url fn');
         echo '</span>, <abbr class="received" title="' . gmdate('Y-m-d\TH:i:s\Z', $date) .
-        '">' . date($conf['dformat'], $date) . '</abbr>';
+        '">' . strftime($conf['dformat'], $date) . '</abbr>';
         echo ' (<abbr class="type" title="' . $this->getLang('linkback_type_' . $type) . '">' . $this->getLang('linkback_type_' . $type) . '</abbr>)';
         echo NL . '</div>' . NL; // class="linkback_head"
 

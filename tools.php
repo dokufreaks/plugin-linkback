@@ -108,7 +108,7 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
         $replace = array (
             $ID,
             $conf['title'],
-            date($conf['dformat'],
+            strftime($conf['dformat'],
             $linkback['received']
         ), $linkback['url'], $linkback['excerpt'], wl($ID, 'do=unsubscribe', true, '&'), DOKU_URL,);
         $text = str_replace($search, $replace, $text);
