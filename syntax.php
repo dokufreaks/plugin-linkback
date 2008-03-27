@@ -95,7 +95,7 @@ class syntax_plugin_linkback extends DokuWiki_Syntax_Plugin {
 
     function render($mode, & $renderer, $status) {
         // do nothing, everything is handled in the action components
-        return true;
+        return false;
     }
 
 }

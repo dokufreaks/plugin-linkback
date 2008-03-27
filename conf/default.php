@@ -12,7 +12,7 @@ $conf['range'] = 20;
 $conf['allow_guests'] = false;
 $conf['enabled_namespaces'] = 'blog';
 $conf['ping_internal'] = true;
-$conf['show_trackback_url'] = true;
+$conf['show_trackback_url'] = false;
 $conf['log_processing'] = true;
 
 // Favicon

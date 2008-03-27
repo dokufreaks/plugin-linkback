@@ -197,7 +197,7 @@ class helper_plugin_linkback extends DokuWiki_Plugin {
         if ($recent['type'] === 'dc')
             return false;
 
-        // get discussion meta file name
+        // get linkback meta file name
         $data = unserialize(io_readFile(metaFN($recent['id'], '.linkbacks'), false));
 
         // check if discussion is turned off

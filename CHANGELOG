@@ -3,14 +3,16 @@
     * Akismet plugin was not called properly
     * Don't allow usage of syntax in comments
     * Minor cosmetic bugs
-  * Added logging system to log processing of incoming linkbacks. Antispam
-    plugins can add own processing information via event-data
-  * Added additional antispam plugin to check if incoming trackbacks contain a 
-    link back to page  
-  * Added support for new form handling of Dokuwiki's development version
-  * Added option for displaying trackback URL for manual trackbacks
+  * Added:
+    * Logging system to log processing of incoming linkbacks. Antispam
+      plugins can add own processing information via event-data
+    * Additional antispam plugin to check if incoming trackbacks contain a 
+      link back to page  
+    * Option for displaying trackback URL for manual trackbacks
   * ''exe/trackback.php'', ''exe/pingback.php'' and ''action/display.php'' now 
     use the pluginutils to load the ''tools'' plugin
+  * Use strftime() instead of date()
+  * Change to new form handling in Dokuwiki
 
 * 2007/04/12:
   * Receiving and displaying of received linkbacks added, sending improved

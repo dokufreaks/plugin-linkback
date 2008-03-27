@@ -65,7 +65,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
      */
     function handle_act_render(& $event, $params) {
         global $ID;
-
+        
         if ($event->data != 'show')
             return;
 
