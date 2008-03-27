@@ -133,9 +133,12 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
     function _show($data) {
         global $ID;
 
-        if (!$data['display'] || (count($data['receivedpings']) == 0))
-        	if (!$this->getConf('show_trackback_url') || !$this->getConf('enable_trackback'))
-            	return;
+        if (!$data['display'])
+        	return;
+        	
+        if ((count($data['receivedpings']) == 0) && 
+        		(!$this->getConf('show_trackback_url') || !$this->getConf('enable_trackback')))
+           	return;
 
         // section title
         $title = $this->getLang('linkbacks');

@@ -14,6 +14,7 @@ $meta['range'] = array( 'string', '_pattern' => '#[0-9]+#' );
 $meta['allow_guests'] = array( 'onoff' );
 $meta['enabled_namespaces'] = array( 'string', '_pattern' => '#[A-Za-z_:0-9, ]*#' );
 $meta['ping_internal'] = array('onoff');
+$meta['show_trackback_url'] = array('onoff');
 $meta['log_processing'] = array('onoff');
 
 $meta['usefavicon'] = array('onoff');

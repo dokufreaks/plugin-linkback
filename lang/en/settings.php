@@ -14,6 +14,7 @@ $lang['range'] = 'How many kilobytes to fetch from linked page for autodiscovery
 $lang['allow_guests'] = 'Allow non-registered users to send linkbacks.';
 $lang['enabled_namespaces'] = 'Namespaces where the sending of linkbacks should be enabled by default (comma-separated list).';
 $lang['ping_internal'] = 'Also ping internal links e.g. for crossreferencing former blog entries.';
+$lang['show_trackback_url'] = 'Show trackback URL on enabled sites.';
 $lang['log_processing'] = 'Log processing of incoming linkbacks (Log will be called linkback.log and be located in the cache-dir).';
 
 $lang['usefavicon'] = 'Retrieve favicon for incoming linkbacks and display it.';
