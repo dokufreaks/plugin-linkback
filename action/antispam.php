@@ -147,7 +147,7 @@ class action_plugin_linkback_antispam extends DokuWiki_Action_Plugin {
         $regex = '!<a[^>]+?href="' . $searchurl . '"[^>]*?>(.*?)</a>!is';
         $regex2 = '!\s(' . $searchurl . ')\s!is';
         if (!preg_match($regex, $page['body'], $match) && !preg_match($regex2, $page['body'], $match)) {
-            if ($this->tools->getConf('ping_internal') && (strstr($targetUri, DOKU_URL) == $targetUri)) {
+            if ($this->getConf('ping_internal') && (strstr($targetUri, DOKU_URL) == $targetUri)) {
                 $ID = substr($_SERVER['PATH_INFO'], 1);
                 $searchurl = preg_quote(wl($ID, '', false), '!');
 
