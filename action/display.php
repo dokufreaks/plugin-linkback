@@ -130,7 +130,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
         $title = $this->getLang('linkbacks');
         echo '<div class="linkback_wrapper">';
         echo '<h2><a name="linkback__section" id="linkback__section">' . $title . '</a></h2>';
-        if ($this->getConf('show_trackback_url')) {
+        if ($this->getConf('show_trackback_url') && $data['receive']) {
 	        echo '<div class="level2 hfeed linkback_trackbackurl">';
 	        echo $this->getLang('trackback_url');
 	        echo '<span class="linkback_trackbackurl">' . DOKU_URL . 'lib/plugins/linkback/exe/trackback.php/' . $ID . '</span>';
