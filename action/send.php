@@ -21,7 +21,7 @@ require_once (DOKU_INC . 'inc/mail.php');
 require_once (DOKU_INC . 'inc/infoutils.php');
 require_once (DOKU_INC . 'inc/pageutils.php');
 require_once (DOKU_INC . 'inc/IXR_Library.php');
-@include_once (DOKU_INC . 'inc/form.php');
+require_once (DOKU_INC . 'inc/form.php');
 
 require_once (DOKU_PLUGIN . 'linkback/http.php');
 
@@ -45,7 +45,6 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
      * Register the eventhandlers.
      */
     function register(& $controller) {
-        $controller->register_hook('HTML_EDITFORM_INJECTION', 'AFTER', $this, 'handle_editform_injection', array ());
         $controller->register_hook('HTML_EDITFORM_OUTPUT', 'BEFORE', $this, 'handle_editform_output', array ());
         $controller->register_hook('PARSER_HANDLER_DONE', 'AFTER', $this, 'handle_parser_handler_done', array ());
     }
@@ -134,58 +133,7 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
     }
 
     /**
-     * Handles HTML_EDITFORM_INJECTION event.
-     * 
-     * Left for compatibility reasons with non-devel DW installations.
-     */
-    function handle_editform_injection(& $event, $params) {
-        global $ID;
-        global $ACT;
-
-        // Not in edit mode? Quit
-        if ($ACT != 'edit' && $ACT != 'preview')
-            return;
-
-        // only show form on writable pages
-        if (!$event->data['writable'])
-            return;
-
-        // if guests are not allowed to perform linkbacks, return
-        if (!$this->getConf('allow_guests') && !$_SERVER['REMOTE_USER'])
-            return;
-
-        // get linkback meta file name
-        $file = metaFN($ID, '.linkbacks');
-        $data = array (
-            'send' => false,
-            'receive' => false,
-            'display' => false,
-            'sentpings' => array (),
-            'receivedpings' => array (),
-            'number' => 0,
-            
-        );
-        if (@ file_exists($file)) {
-            $data = unserialize(io_readFile($file, false));
-        } else {
-	        $namespaces = explode(',', $this->getConf('enabled_namespaces'));
-			$ns = getNS($ID);
-			foreach($namespaces as $namespace) {
-			    if (strstr($ns, $namespace) == $ns)
-			        $data['send'] = true;
-			}
-        }
-
-        echo '<div id="plugin__linkback_wrapper">';
-        echo '<input type="checkbox" name="plugin__linkback_toggle" id="plugin__linkback_toggle" class="edit" ' . (($data['send']) ? 'checked="checked" ' : '') . '/> ';
-        echo '<label for="plugin__linkback_toggle">' . $this->getLang('linkback_enabledisable') . '</label>';
-        echo '</div>';
-    }
-
-    /**
      * Handles HTML_EDITFORM_OUTPUT event.
-     * 
-     * @develonly
      */
     function handle_editform_output(& $event, $params) {
         global $ID;
