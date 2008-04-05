@@ -166,12 +166,24 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
         if (@ file_exists($file)) {
             $data = unserialize(io_readFile($file, false));
         } else {
-	        $namespaces = explode(',', $this->getConf('enabled_namespaces'));
-			$ns = getNS($ID);
-			foreach($namespaces as $namespace) {
-			    if (strstr($ns, $namespace) == $ns)
-			        $data['send'] = true;
-			}
+        	$namespace_conf = $this->getConf('enabled_namespaces');
+        	if ($namespace_conf == '*') {
+        		$data['send'] = true;
+        	} else {
+		        $namespaces = explode(',', $namespace_conf);
+				$ns = getNS($ID);
+				foreach($namespaces as $namespace) {
+					if ($namespace == '') {
+						continue;
+					} else if ($namespace == '*') {
+						$data['send'] = true;
+						break;
+					} else if (strstr($ns, $namespace) === $ns) {
+				        $data['send'] = true;
+				        break;
+					}
+				}
+        	}
         }
 
 		$form = $event->data;
