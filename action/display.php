@@ -94,33 +94,19 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
             // toggle show/hide
             case 'linkback_toggle' :
                 $linkback = $data['receivedpings'][$lid];
-                $linkback['show'] = !$linkback['show'];
-                if ($linkback['show'])
-                    $data['number']++;
-                else
-                    $data['number']--;
-                $data['receivedpings'][$lid] = $linkback;
-                io_saveFile($file, serialize($data));
-                $this->tools->addLogEntry($linkback['received'], $ID, (($linkback['show']) ? 'sl' : 'hl'), '', $linkback['lid']);
+                $data = $this->_changeLinkbackVisibilities(array($lid), !$linkback['show']);
                 break;
-                // delete linkback
+            // delete linkback
             case 'linkback_delete' :
-                $linkback = $data['receivedpings'][$lid];
-                unset ($data['receivedpings'][$lid]);
-                if ($linkback['show'])
-                	$data['number']--;
-                io_saveFile($file, serialize($data));
-                $this->tools->addLogEntry($linkback['received'], $ID, 'dl', '', $linkback['lid']);
+            	$data = $this->_deleteLinkbacks(array($lid));
                 break;
                 // report linkback as ham
             case 'linkback_ham' :
-                $linkback = $data['receivedpings'][$lid];
-                trigger_event('ACTION_LINKBACK_HAM', $linkback);
+            	$this->_markLinkbacks(array($lid), false);
                 break;
                 // report linkback as spam
             case 'linkback_spam' :
-                $linkback = $data['receivedpings'][$lid];
-                trigger_event('ACTION_LINKBACK_SPAM', $linkback);
+            	$this->_markLinkbacks(array($lid), true);
                 break;
         }
 
@@ -304,5 +290,101 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
         $new = str_replace($search, $item . $search, $match[0]);
         $event->data[1] = preg_replace($pattern, $new, $event->data[1]);
     }
+    
+    function _changeLinkbackVisibilities($lids, $visible) {
+    	global $ID;
+    	
+        $file = metaFN($ID, '.linkbacks');
+        $data = array (
+            'send' => false,
+            'receive' => false,
+            'display' => false,
+            'sentpings' => array (),
+            'receivedpings' => array (),
+            'number' => 0,
+            
+        );
 
+        if (@ file_exists($file))
+            $data = unserialize(io_readFile($file, false));
+        $update = false;
+            
+    	foreach ($lids as $lid) {
+            $linkback = $data['receivedpings'][$lid];
+            if ($linkback['show'] == $visible) 
+            	continue;
+            	
+            $linkback['show'] = $visible;
+            if ($linkback['show'])
+                $data['number']++;
+            else
+                $data['number']--;
+            $data['receivedpings'][$lid] = $linkback;
+            $this->tools->addLogEntry($linkback['received'], $ID, (($linkback['show']) ? 'sl' : 'hl'), '', $linkback['lid']);
+            $update = true;
+    	}
+    	
+        if ($update)
+        	io_saveFile($file, serialize($data));
+        return $data;
+    }
+
+    function _deleteLinkbacks($lids) {
+    	global $ID;
+    	
+        $file = metaFN($ID, '.linkbacks');
+        $data = array (
+            'send' => false,
+            'receive' => false,
+            'display' => false,
+            'sentpings' => array (),
+            'receivedpings' => array (),
+            'number' => 0,
+            
+        );
+
+        if (@ file_exists($file))
+            $data = unserialize(io_readFile($file, false));
+        $update = false;
+            
+    	foreach ($lids as $lid) {
+            $linkback = $data['receivedpings'][$lid];
+            unset ($data['receivedpings'][$lid]);
+            if ($linkback['show'])
+            	$data['number']--;
+            $this->tools->addLogEntry($linkback['received'], $ID, 'dl', '', $linkback['lid']);
+            $update = true;
+    	}
+    	
+    	if ($update)
+        	io_saveFile($file, serialize($data));
+        return $data;
+    }
+    
+    function _markLinkbacks($lids, $isSpam) {
+    	global $ID;
+    	
+        $file = metaFN($ID, '.linkbacks');
+        $data = array (
+            'send' => false,
+            'receive' => false,
+            'display' => false,
+            'sentpings' => array (),
+            'receivedpings' => array (),
+            'number' => 0,
+            
+        );
+
+        if (@ file_exists($file))
+            $data = unserialize(io_readFile($file, false));
+            
+    	foreach ($lids as $lid) {
+            $linkback = $data['receivedpings'][$lid];
+            if ($isSpam)
+            	trigger_event('ACTION_LINKBACK_SPAM', $linkback);
+            else
+            	trigger_event('ACTION_LINKBACK_HAM', $linkback);
+    	}
+    }
+    
 }
