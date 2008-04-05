@@ -80,3 +80,12 @@ div.dokuwiki div.linkback_line {
     margin-top: 1em;
     margin-bottom: 1em;
 }
+
+div.dokuwiki ul.admin_linkback li.hidden {
+  display: list-item;
+  opacity: 0.5;
+}
+
+div.dokuwiki ul.admin_linkback span.excerpt {
+  color: __text_neu__;
+}
