@@ -17,7 +17,7 @@ class admin_plugin_linkback extends DokuWiki_Admin_Plugin {
     return array(
       'author' => 'Gina Häußge',
       'email'  => 'osd@foosel.net',
-      'date'   => '2008-04-01',
+      'date'   => '2008-04-06',
       'name'   => 'Linkback Plugin (admin component)',
       'desc'   => 'Moderate linkbacks',
       'url'    => 'http://foosel.net/snippets/dokuwiki/linkback',

@@ -45,7 +45,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
         return array (
             'author' => 'Gina Haeussge',
             'email' => 'osd@foosel.net',
-            'date' => '2007-04-12',
+            'date' => '2008-04-06',
             'name' => 'Linkback Plugin (display component)',
             'desc' => 'Displays received linkbacks beneath a wiki node.',
             'url' => 'http://wiki.foosel.net/snippets/dokuwiki/linkback',

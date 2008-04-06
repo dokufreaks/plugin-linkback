@@ -1,4 +1,4 @@
-* 
+* 2008/04/06
   * Fixed: 
     * Akismet plugin was not called properly
     * Don't allow usage of syntax in comments
@@ -9,6 +9,8 @@
     * Additional antispam plugin to check if incoming trackbacks contain a 
       link back to page  
     * Option for displaying trackback URL for manual trackbacks
+    * Admin component for bulk moderating linkbacks
+    * URL of pinged page is now included in notification mail
   * ''exe/trackback.php'', ''exe/pingback.php'' and ''action/display.php'' now 
     use the pluginutils to load the ''tools'' plugin
   * Use strftime() instead of date()
