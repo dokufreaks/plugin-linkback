@@ -102,15 +102,19 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
             '@TEXT@',
             '@UNSUBSCRIBE@',
             '@DOKUWIKIURL@',
-
+			'@PAGEURL@',
             
         );
         $replace = array (
             $ID,
             $conf['title'],
-            strftime($conf['dformat'],
-            $linkback['received']
-        ), $linkback['url'], $linkback['excerpt'], wl($ID, 'do=unsubscribe', true, '&'), DOKU_URL,);
+            strftime($conf['dformat'], $linkback['received']), 
+            $linkback['url'], 
+            $linkback['excerpt'], 
+            wl($ID, 'do=unsubscribe', true, '&'), 
+        	DOKU_URL,
+        	wl($ID), 
+        );
         $text = str_replace($search, $replace, $text);
 
         $subject = '[' . $conf['title'] . '] ' . $this->getLang('mail_newlinkback');

@@ -1,11 +1,13 @@
 Hello!
 
-A new linkback was added to the page @PAGE@ in the @TITLE@ wiki.
+A new linkback was added to the page @PAGE@ in the @TITLE@ wiki. This page
+can be found here:
+@PAGEURL@
 
 Date:   @DATE@
 URL:    @URL@
 
-Comment:
+Excerpt:
 --------------------------------------------------------
 @TEXT@
 --------------------------------------------------------
