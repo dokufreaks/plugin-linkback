@@ -113,7 +113,7 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
             $linkback['excerpt'], 
             wl($ID, 'do=unsubscribe', true, '&'), 
         	DOKU_URL,
-        	wl($ID), 
+        	wl($ID, '', true), 
         );
         $text = str_replace($search, $replace, $text);
 
