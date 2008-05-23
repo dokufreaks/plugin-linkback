@@ -189,7 +189,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
             $size = 16;
             $src = ml($icon);
             echo '<img src="' . $src . '" class="medialeft photo" title="' . $url . '"' .
-            ' alt="' . $url . '" width="' . $size . '" height="' . $size . '" />' . NL;
+            ' width="' . $size . '" height="' . $size . '" />' . NL;
             $style = ' style="margin-left: ' . ($size +14) . 'px;"';
         } else {
             $style = ' style="margin-left: 20px;"';
