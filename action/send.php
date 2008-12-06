@@ -27,6 +27,8 @@ require_once (DOKU_PLUGIN . 'linkback/http.php');
 
 class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
 
+    var $preact;
+
     /**
      * return some info
      */
@@ -46,19 +48,34 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
      */
     function register(& $controller) {
         $controller->register_hook('HTML_EDITFORM_OUTPUT', 'BEFORE', $this, 'handle_editform_output', array ());
-        $controller->register_hook('PARSER_HANDLER_DONE', 'AFTER', $this, 'handle_parser_handler_done', array ());
+        $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_action_act_preprocess_before', array());
+        $controller->register_hook('ACTION_ACT_PREPROCESS', 'AFTER', $this, 'handle_action_act_preprocess_after', array());
     }
 
     /**
-     * Handler for the PARSER_HANDLER_DONE event
+     * Handler for the ACTION_ACT_PREPROCESS event and BEFORE advise.
+     * 
+     * Saves current action.
      */
-    function handle_parser_handler_done(& $event, $params) {
+    function handle_action_act_preprocess_before(&$event, $params) {
+        if (is_array($event->data))
+            list($this->preact) = array_keys($event->data);
+        else
+            $this->preact = $event->data;
+    }
+
+    /**
+     * Handler for the ACTION_ACT_PREPROCESS event and AFTER advise.
+     * 
+     * Sends linkback if previous action was 'save' and new one is show.
+     */
+    function handle_action_act_preprocess_after(& $event, $params) {
         global $ID;
         global $ACT;
         global $conf;
 
         // only perform linkbacks on save of a wikipage
-        if ($ACT != 'save')
+        if ($this->preact != 'save' || $event->data != 'show')
             return;
 
         // if guests are not allowed to perform linkbacks, return
@@ -93,7 +110,7 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
         $linkback_info['excerpt'] = $meta['description']['abstract'];
 
         // get links
-        $pages = $this->_parse_instructionlist($event->data->calls);
+        $pages = $this->_parse_instructionlist(p_cached_instructions(wikiFN($ID),false,$ID));
 
         $sentpings = array ();
         foreach ($pages as $page) {
