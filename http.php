@@ -9,6 +9,8 @@ define('HTTP_NL', "\r\n");
 /**
  * Modifies sendRequest. If max_bodysize_limit is set to true, the size of
  * the retrieved body is limited to the value set in max_bodysize.
+ * 
+ * Also, modifies get and post to allow response codes in the 200 range.
  *
  * @author Gina Haeussge <osd@foosel.net>
  */

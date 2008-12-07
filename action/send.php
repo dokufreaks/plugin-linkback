@@ -36,7 +36,7 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
         return array (
             'author' => 'Gina Haeussge',
             'email' => 'osd@foosel.net',
-            'date' => '2008-04-06',
+            'date' => @file_get_contents(DOKU_PLUGIN.'linkback/VERSION'),
             'name' => 'Linkback Plugin (send component)',
             'desc' => 'Responsible of sending linkbacks to urls upon saving a linkback enabled wiki page.',
             'url' => 'http://wiki.foosel.net/snippets/dokuwiki/linkback',

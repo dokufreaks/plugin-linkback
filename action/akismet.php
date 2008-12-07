@@ -28,7 +28,7 @@ class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
         return array (
             'author' => 'Gina Haeussge, based upon work of Andreas Gohr',
             'email' => 'osd@foosel.net',
-            'date' => '2008-04-06',
+            'date' => @file_get_contents(DOKU_PLUGIN.'linkback/VERSION'),
             'name' => 'Linkback Plugin (akismet component)',
             'desc' => 'Use the Wordpress Akismet webservice to protect linkbacks against spam',
             'url' => 'http://wiki.foosel.net/snippets/dokuwiki/linkback',

@@ -71,7 +71,7 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
             'headers' => $http_client->resp_headers,
             'body' => $http_client->resp_body,
             'error' => $http_client->error,
-	    'status' => $http_client->status,
+	        'status' => $http_client->status,
         );
     }
 

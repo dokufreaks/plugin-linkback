@@ -1,3 +1,9 @@
+* 2008/12/07
+  * Fixed:
+    * Fix for nasty recursion bug in sending routine when ''$conf['use_heading']'' was set
+    * Fixed HTTP client to correctly accept all type 200 responses as successful
+    * Give up sending immediately if instructionlist is empty or non-existant
+
 * 2008/04/06
   * Fixed: 
     * Akismet plugin was not called properly

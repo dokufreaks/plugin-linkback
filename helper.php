@@ -23,7 +23,7 @@ class helper_plugin_linkback extends DokuWiki_Plugin {
         return array (
             'author' => 'Gina Haeussge',
             'email' => 'osd@foosel.net',
-            'date' => '2008-04-06',
+            'date' => @file_get_contents(DOKU_PLUGIN.'linkback/VERSION'),
             'name' => 'Linkback Plugin (helper class)',
             'desc' => 'Functions to get info about linkbacks to a wiki page',
             'url' => 'http://wiki.foosel.net/snippets/dokuwiki/linkback',
