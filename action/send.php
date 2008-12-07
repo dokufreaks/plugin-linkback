@@ -110,7 +110,10 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
         $linkback_info['excerpt'] = $meta['description']['abstract'];
 
         // get links
-        $pages = $this->_parse_instructionlist(p_cached_instructions(wikiFN($ID),false,$ID));
+        $ilist = p_cached_instructions(wikiFN($ID),false,$ID);
+        if (!is_array($ilist))
+            return;
+        $pages = $this->_parse_instructionlist($ilist);
 
         $sentpings = array ();
         foreach ($pages as $page) {
