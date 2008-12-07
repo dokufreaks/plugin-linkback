@@ -288,6 +288,7 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
     function _ping_page_trackback($pingurl, $linkback_info) {
         $http_client = new DokuHTTPClient();
         $success = $http_client->post($pingurl, $linkback_info);
+        return ($success !== false);
     }
 
     /**

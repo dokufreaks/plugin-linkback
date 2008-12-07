@@ -183,7 +183,8 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
             $trim_time = time() - $conf['recent_days'] * 86400;
             $out_lines = array ();
 
-            for ($i = 0; $i < count($lines); $i++) {
+            $linecount = count($lines);
+            for ($i = 0; $i < $linecount; $i++) {
                 $log = parseChangelogLine($lines[$i]);
                 if ($log === false)
                     continue; // discard junk
