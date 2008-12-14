@@ -18,6 +18,7 @@ require_once (DOKU_INC . 'inc/init.php');
 require_once (DOKU_INC . 'inc/common.php');
 require_once (DOKU_INC . 'inc/events.php');
 require_once (DOKU_INC . 'inc/IXR_Library.php');
+require_once (DOKU_INC . 'inc/pluginutils.php');
 require_once (DOKU_PLUGIN . 'linkback/tools.php');
 require_once (DOKU_PLUGIN . 'linkback/http.php');
 
@@ -48,6 +49,10 @@ class PingbackServer extends IXR_Server {
     }
 
     function ping($sourceUri, $targetUri) {
+        // Plugin not enabled? Quit
+        if (plugin_isdisabled('linkback'))
+            return new IXR_Error(PINGBACK_ERROR_TARGETURI_CANNOT_BE_USED, '');
+
         // pingback disabled? Quit
         if (!$this->tools->getConf('enable_pingback'))
             return new IXR_Error(PINGBACK_ERROR_TARGETURI_CANNOT_BE_USED, '');
