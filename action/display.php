@@ -64,7 +64,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
      * Handler for the TPL_ACT_RENDER event
      */
     function handle_act_render(& $event, $params) {
-        global $ID;
+        global $ID, $INFO;
         
         if ($event->data != 'show')
             return;
@@ -83,7 +83,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
         if (@ file_exists($file))
             $data = unserialize(io_readFile($file, false));
 
-        if (!isset ($_REQUEST['linkback']))
+        if (!isset ($_REQUEST['linkback']) || $INFO['perm'] != AUTH_ADMIN)
             $_REQUEST['linkback'] = 'linkback_show';
 
         $lid = $_REQUEST['lid'];
