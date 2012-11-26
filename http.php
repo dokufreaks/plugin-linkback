@@ -19,7 +19,7 @@ class LinkbackHTTPClient extends DokuHTTPClient {
     var $max_bodysize_limit = false;
 
     function LinkbackHTTPClient() {
-        $this->DokuHTTPClient();
+        parent::__construct();
     }
 
     /**
