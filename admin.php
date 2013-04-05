@@ -107,7 +107,7 @@ class admin_plugin_linkback extends DokuWiki_Admin_Plugin {
             
     // returns the list of pages in the given namespace and it's subspaces
     $items = array();
-    search($items, $conf['datadir'], 'search_allpages', '');
+    search($items, $conf['datadir'], 'search_allpages', array());
             
     // add pages with comments to result
     $result = array();
