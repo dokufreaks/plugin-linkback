@@ -26,3 +26,5 @@ $lang['antispam_host_moderate'] = 'Wenn hostname und zugreifende IP-Adresse nich
 $lang['antispam_link_enable']  = 'Aktiviert link antispam Messung (für Linkbacks muss ein Link zu uns gesetzt sein) ';
 $lang['antispam_link_moderate'] = 'Wenn sendende Seite keinen Link zu uns enthält, moderiere Linkback anstatt zu löschen.';
 $lang['akismet_enable']        = 'Aktiviert Akismet antispam Messung. ';
+$lang['akismet_apikey']        = 'Der <a href="http://wordpress.com/signup/">Akismet API Schlüssel</a>. Das Plugin funktioniert ohne ihn nicht!';
+$lang['akismet_moderate']      = 'Wenn Akismet einen Linkback als Spam einschätzt, moderiere ihn anstatt zu löschen.';
