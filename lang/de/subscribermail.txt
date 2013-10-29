@@ -1,0 +1,20 @@
+Hallo!
+
+Ein neuer Linkback wurde zur Seite @PAGE@ im @TITLE@ Wiki hinzugefügt. Die Seite kann hier gefunden werden:
+@PAGEURL@
+
+Datum: @DATE@
+URL: @URL@
+
+Auszug:
+--------------------------------------------------------
+@TEXT@
+--------------------------------------------------------
+
+Um Infos dieser Seite nicht mehr zu abonnieren, melde dich im Wiki an und dann klicke diesen Link:
+@UNSUBSCRIBE@
+
+--
+Diese Email wurde von DokuWiki
+@DOKUWIKIURL@
+geschickt.
