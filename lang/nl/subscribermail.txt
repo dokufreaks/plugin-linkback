@@ -1,0 +1,21 @@
+Hello!
+
+Een nieuwe linkback werd toegevoegd aan de pagina @PAGE@ in de @TITLE@ wiki.
+Deze pagina
+bevindt zich hier:
+@PAGEURL@
+
+Datum: @DATE@
+URL: @URL@
+
+Samenvatting:
+--------------------------------------------------------------
+@TEXT@
+--------------------------------------------------------------
+
+Om u uit te schrijven van deze pagina moet u inloggen in de wiki en de volgende link kiezen:
+@UNSUBSCRIBE@
+
+--
+Deze email werd gegenereerd door Dokuwiki op
+@DOKUWIKIURL@
