@@ -41,14 +41,14 @@ class action_plugin_linkback_antispam extends DokuWiki_Action_Plugin {
     /**
      * Register the eventhandlers.
      */
-    function register(& $controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('ACTION_LINKBACK_RECEIVED', 'BEFORE', $this, 'handle_linkback_received', array ());
     }
 
     /**
      * Handler for the ACTION_LINKBACK_RECEIVED event.
      */
-    function handle_linkback_received(& $event, $param) {
+    function handle_linkback_received(Doku_Event $event, $param) {
         $linkback = $event->data['trackback_data'];
         $page = $event->data['page'];
         $target = $event->data['target'];

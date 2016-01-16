@@ -38,7 +38,7 @@ class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
     /**
      * register the eventhandlers
      */
-    function register(& $controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('ACTION_LINKBACK_RECEIVED', 'BEFORE', $this, 'handle_linkback_received', array ());
         $controller->register_hook('ACTION_LINKBACK_HAM', 'AFTER', $this, 'handle_linkback_ham', array ());
         $controller->register_hook('ACTION_LINKBACK_SPAM', 'AFTER', $this, 'handle_linkback_spam', array ());
@@ -47,7 +47,7 @@ class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
     /**
      * Handler for the ACTION_LINKBACK_RECEIVED event
      */
-    function handle_linkback_received(& $event, $param) {
+    function handle_linkback_received(Doku_Event $event, $param) {
         $linkback = $event->data['linkback'];
         
         $tools =& plugin_load('tools', 'linkback');
@@ -73,7 +73,7 @@ class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
     /**
      * Handler for the ACTION_LINKBACK_HAM event
      */
-    function handle_linkback_ham(& $event, $params) {
+    function handle_linkback_ham(Doku_Event $event, $params) {
         $linkback = $event->data['linkback'];
 
         if (!$this->getConf('akismet_enabled') || !$this->getConf('akismet_apikey'))
@@ -86,7 +86,7 @@ class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
     /**
      * Handler for the ACTION_LINKBACK_SPAM event
      */
-    function handle_linkback_spam(& $event, $params) {
+    function handle_linkback_spam(Doku_Event $event, $params) {
         $linkback = $event->data['linkback'];
 
         if (!$this->getConf('akismet_enabled') || !$this->getConf('akismet_apikey'))

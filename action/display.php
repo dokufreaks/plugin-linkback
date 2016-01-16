@@ -55,7 +55,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
     /**
      * Register the eventhandlers.
      */
-    function register(& $controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('TPL_ACT_RENDER', 'AFTER', $this, 'handle_act_render', array ());
         $controller->register_hook('RENDERER_CONTENT_POSTPROCESS', 'AFTER', $this, 'handle_content_postprocess', array ());
     }
@@ -63,7 +63,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
     /**
      * Handler for the TPL_ACT_RENDER event
      */
-    function handle_act_render(& $event, $params) {
+    function handle_act_render(Doku_Event $event, $params) {
         global $ID, $INFO;
         
         if ($event->data != 'show')
@@ -257,7 +257,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
      * 
      * Code mostly taken from the discussion plugin by Esther Brunner.
      */
-    function handle_content_postprocess(& $event, $params) {
+    function handle_content_postprocess(Doku_Event $event, $params) {
         global $ID;
         global $conf;
 

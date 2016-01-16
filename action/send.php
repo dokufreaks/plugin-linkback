@@ -46,7 +46,7 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
     /**
      * Register the eventhandlers.
      */
-    function register(& $controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('HTML_EDITFORM_OUTPUT', 'BEFORE', $this, 'handle_editform_output', array ());
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_action_act_preprocess_before', array());
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'AFTER', $this, 'handle_action_act_preprocess_after', array());
@@ -57,7 +57,7 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
      * 
      * Saves current action.
      */
-    function handle_action_act_preprocess_before(&$event, $params) {
+    function handle_action_act_preprocess_before(Doku_Event $event, $params) {
         if (is_array($event->data))
             list($this->preact) = array_keys($event->data);
         else
@@ -69,7 +69,7 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
      * 
      * Sends linkback if previous action was 'save' and new one is show.
      */
-    function handle_action_act_preprocess_after(& $event, $params) {
+    function handle_action_act_preprocess_after(Doku_Event $event, $params) {
         global $ID;
         global $ACT;
         global $conf;
@@ -155,7 +155,7 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
     /**
      * Handles HTML_EDITFORM_OUTPUT event.
      */
-    function handle_editform_output(& $event, $params) {
+    function handle_editform_output(Doku_Event $event, $params) {
         global $ID;
         global $ACT;
         global $INFO;

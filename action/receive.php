@@ -41,7 +41,7 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
     /**
      * Register the eventhandlers.
      */
-    function register(& $controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('TPL_ACT_RENDER', 'BEFORE', $this, 'handle_act_render', array ());
         $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'handle_metaheader_output', array ());
         $controller->register_hook('ACTION_HEADERS_SEND', 'BEFORE', $this, 'handle_headers_send', array ());
@@ -50,7 +50,7 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
     /**
      * Handler for the TPL_ACT_RENDER event
      */
-    function handle_act_render(& $event, $params) {
+    function handle_act_render(Doku_Event $event, $params) {
         global $ID;
 
         // Action not 'show'? Quit
@@ -96,7 +96,7 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
     /**
      * Handler for the TPL_METAHEADER_OUTPUT event
      */
-    function handle_metaheader_output(& $event, $params) {
+    function handle_metaheader_output(Doku_Event $event, $params) {
         global $ID;
 
         // Pingbacks disabled? Quit
@@ -132,7 +132,7 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
     /**
      * Handler for the ACTION_HEADERS_SEND event
      */
-    function handle_headers_send(& $event, $params) {
+    function handle_headers_send(Doku_Event $event, $params) {
         global $ID;
 
         // Pingbacks disabled? Quit
