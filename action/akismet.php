@@ -22,20 +22,6 @@ require_once (DOKU_INC . 'inc/infoutils.php');
 class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
 
     /**
-     * return some info
-     */
-    function getInfo() {
-        return array (
-            'author' => 'Gina Haeussge, based upon work of Andreas Gohr',
-            'email' => 'osd@foosel.net',
-            'date' => @file_get_contents(DOKU_PLUGIN.'linkback/VERSION'),
-            'name' => 'Linkback Plugin (akismet component)',
-            'desc' => 'Use the Wordpress Akismet webservice to protect linkbacks against spam',
-            'url' => 'http://wiki.foosel.net/snippets/dokuwiki/linkback',
-        );
-    }
-
-    /**
      * register the eventhandlers
      */
     function register(Doku_Event_Handler $controller) {
@@ -57,7 +43,7 @@ class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
 
         $data = $this->_prepareData($linkback);
         if ($this->_checkForSpam($data)) {
-        	$event->data['log'][] = "\tAkismet marked linkback as spam";
+            $event->data['log'][] = "\tAkismet marked linkback as spam";
             $event->data['show'] = false;
             if (!$this->getConf('akismet_moderate'))
                 $event->preventDefault();

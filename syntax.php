@@ -17,20 +17,6 @@ require_once (DOKU_PLUGIN . 'syntax.php');
 
 class syntax_plugin_linkback extends DokuWiki_Syntax_Plugin {
 
-    /**
-     * return some info
-     */
-    function getInfo() {
-        return array (
-            'author' => 'Gina Haeussge',
-            'email' => 'osd@foosel.net',
-            'date' => @file_get_contents(DOKU_PLUGIN.'linkback/VERSION'),
-            'name' => 'Linkback Plugin',
-            'desc' => 'Enables/disables linkback features.',
-            'url' => 'http://wiki.foosel.net/snippets/dokuwiki/linkback',
-        );
-    }
-
     function getType() {
         return 'substition';
     }
@@ -61,9 +47,9 @@ class syntax_plugin_linkback extends DokuWiki_Syntax_Plugin {
         if (defined('IS_BLOG_MAINPAGE'))
             return false;
 
-		// don't allow usage of syntax in comments
+        // don't allow usage of syntax in comments
         if (isset($_REQUEST['comment']))
-        	return false;
+            return false;
 
         // get linkback meta file name
         $file = metaFN($ID, '.linkbacks');

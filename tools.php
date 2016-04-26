@@ -67,11 +67,11 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
         $retval = $http_client->get($url, true);
 
         return array (
-       	    'success' => $retval,
+            'success' => $retval,
             'headers' => $http_client->resp_headers,
             'body' => $http_client->resp_body,
             'error' => $http_client->error,
-	        'status' => $http_client->status,
+            'status' => $http_client->status,
         );
     }
 
@@ -102,7 +102,7 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
             '@TEXT@',
             '@UNSUBSCRIBE@',
             '@DOKUWIKIURL@',
-			'@PAGEURL@',
+            '@PAGEURL@',
             
         );
         $replace = array (
@@ -112,8 +112,8 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
             $linkback['url'], 
             $linkback['excerpt'], 
             wl($ID, 'do=unsubscribe', true, '&'), 
-        	DOKU_URL,
-        	wl($ID, '', true), 
+            DOKU_URL,
+            wl($ID, '', true), 
         );
         $text = str_replace($search, $replace, $text);
 
@@ -220,7 +220,7 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
     }
     
     function addProcessLogEntry($data) {
-    	global $conf;
+        global $conf;
     
         io_saveFile($conf['cachedir'].'/linkback.log',join("\n",$data)."\n\n",true);
     }

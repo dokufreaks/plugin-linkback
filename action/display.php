@@ -39,20 +39,6 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
     }
 
     /**
-     * return some info
-     */
-    function getInfo() {
-        return array (
-            'author' => 'Gina Haeussge',
-            'email' => 'osd@foosel.net',
-            'date' => @file_get_contents(DOKU_PLUGIN.'linkback/VERSION'),
-            'name' => 'Linkback Plugin (display component)',
-            'desc' => 'Displays received linkbacks beneath a wiki node.',
-            'url' => 'http://wiki.foosel.net/snippets/dokuwiki/linkback',
-        );
-    }
-
-    /**
      * Register the eventhandlers.
      */
     function register(Doku_Event_Handler $controller) {
@@ -120,21 +106,21 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
         global $ID;
 
         if (!$data['display'])
-        	return;
-        	
+            return;
+
         if ((count($data['receivedpings']) == 0) && 
-        		(!$this->getConf('show_trackback_url') || !$this->getConf('enable_trackback')))
-           	return;
+                (!$this->getConf('show_trackback_url') || !$this->getConf('enable_trackback')))
+            return;
 
         // section title
         $title = $this->getLang('linkbacks');
         echo '<div class="linkback_wrapper">';
         echo '<h2><a name="linkback__section" id="linkback__section">' . $title . '</a></h2>';
         if ($this->getConf('show_trackback_url') && $data['receive']) {
-	        echo '<div class="level2 hfeed linkback_trackbackurl">';
-	        echo $this->getLang('trackback_url');
-	        echo '<span class="linkback_trackbackurl">' . DOKU_URL . 'lib/plugins/linkback/exe/trackback.php/' . $ID . '</span>';
-	        echo '</div>';
+            echo '<div class="level2 hfeed linkback_trackbackurl">';
+            echo $this->getLang('trackback_url');
+            echo '<span class="linkback_trackbackurl">' . DOKU_URL . 'lib/plugins/linkback/exe/trackback.php/' . $ID . '</span>';
+            echo '</div>';
         }
         echo '<div class="level2 hfeed">';
 
@@ -292,8 +278,8 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
     }
     
     function _changeLinkbackVisibilities($lids, $visible) {
-    	global $ID;
-    	
+        global $ID;
+
         $file = metaFN($ID, '.linkbacks');
         $data = array (
             'send' => false,
@@ -309,11 +295,11 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
             $data = unserialize(io_readFile($file, false));
         $update = false;
             
-    	foreach ($lids as $lid) {
+        foreach ($lids as $lid) {
             $linkback = $data['receivedpings'][$lid];
             if ($linkback['show'] == $visible) 
-            	continue;
-            	
+                continue;
+
             $linkback['show'] = $visible;
             if ($linkback['show'])
                 $data['number']++;
@@ -322,16 +308,16 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
             $data['receivedpings'][$lid] = $linkback;
             $this->tools->addLogEntry($linkback['received'], $ID, (($linkback['show']) ? 'sl' : 'hl'), '', $linkback['lid']);
             $update = true;
-    	}
-    	
+        }
+
         if ($update)
-        	io_saveFile($file, serialize($data));
+            io_saveFile($file, serialize($data));
         return $data;
     }
 
     function _deleteLinkbacks($lids) {
-    	global $ID;
-    	
+        global $ID;
+
         $file = metaFN($ID, '.linkbacks');
         $data = array (
             'send' => false,
@@ -346,24 +332,24 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
         if (@ file_exists($file))
             $data = unserialize(io_readFile($file, false));
         $update = false;
-            
-    	foreach ($lids as $lid) {
+
+        foreach ($lids as $lid) {
             $linkback = $data['receivedpings'][$lid];
             unset ($data['receivedpings'][$lid]);
             if ($linkback['show'])
-            	$data['number']--;
+                $data['number']--;
             $this->tools->addLogEntry($linkback['received'], $ID, 'dl', '', $linkback['lid']);
             $update = true;
-    	}
-    	
-    	if ($update)
-        	io_saveFile($file, serialize($data));
+        }
+
+        if ($update)
+            io_saveFile($file, serialize($data));
         return $data;
     }
     
     function _markLinkbacks($lids, $isSpam) {
-    	global $ID;
-    	
+        global $ID;
+
         $file = metaFN($ID, '.linkbacks');
         $data = array (
             'send' => false,
@@ -378,13 +364,13 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
         if (@ file_exists($file))
             $data = unserialize(io_readFile($file, false));
             
-    	foreach ($lids as $lid) {
+        foreach ($lids as $lid) {
             $linkback = $data['receivedpings'][$lid];
             if ($isSpam)
-            	trigger_event('ACTION_LINKBACK_SPAM', $linkback);
+                trigger_event('ACTION_LINKBACK_SPAM', $linkback);
             else
-            	trigger_event('ACTION_LINKBACK_HAM', $linkback);
-    	}
+                trigger_event('ACTION_LINKBACK_HAM', $linkback);
+        }
     }
     
 }

@@ -30,20 +30,6 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
     var $preact;
 
     /**
-     * return some info
-     */
-    function getInfo() {
-        return array (
-            'author' => 'Gina Haeussge',
-            'email' => 'osd@foosel.net',
-            'date' => @file_get_contents(DOKU_PLUGIN.'linkback/VERSION'),
-            'name' => 'Linkback Plugin (send component)',
-            'desc' => 'Responsible of sending linkbacks to urls upon saving a linkback enabled wiki page.',
-            'url' => 'http://wiki.foosel.net/snippets/dokuwiki/linkback',
-        );
-    }
-
-    /**
      * Register the eventhandlers.
      */
     function register(Doku_Event_Handler $controller) {
@@ -166,7 +152,7 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
 
         // page not writable? Quit
         if (!$INFO['writable'])
-        	return;
+            return;
 
         // if guests are not allowed to perform linkbacks, return
         if (!$this->getConf('allow_guests') && !$_SERVER['REMOTE_USER'])
@@ -186,31 +172,31 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
         if (@ file_exists($file)) {
             $data = unserialize(io_readFile($file, false));
         } else {
-        	$namespace_conf = $this->getConf('enabled_namespaces');
-        	if ($namespace_conf == '*') {
-        		$data['send'] = true;
-        	} else {
-		        $namespaces = explode(',', $namespace_conf);
-				$ns = getNS($ID);
-				foreach($namespaces as $namespace) {
-					if ($namespace == '') {
-						continue;
-					} else if ($namespace == '*') {
-						$data['send'] = true;
-						break;
-					} else if (strstr($ns, $namespace) === $ns) {
-				        $data['send'] = true;
-				        break;
-					}
-				}
-        	}
+            $namespace_conf = $this->getConf('enabled_namespaces');
+            if ($namespace_conf == '*') {
+                $data['send'] = true;
+            } else {
+                $namespaces = explode(',', $namespace_conf);
+                $ns = getNS($ID);
+                foreach($namespaces as $namespace) {
+                    if ($namespace == '') {
+                        continue;
+                    } else if ($namespace == '*') {
+                        $data['send'] = true;
+                        break;
+                    } else if (strstr($ns, $namespace) === $ns) {
+                        $data['send'] = true;
+                        break;
+                    }
+                }
+            }
         }
 
-		$form = $event->data;
-		$pos = $form->findElementById('wiki__editbar');
-		$form->insertElement($pos, form_makeOpenTag('div', array('id'=>'plugin__linkback_wrapper')));
-		$form->insertElement($pos + 1, form_makeCheckboxField('plugin__linkback_toggle', '1', $this->getLang('linkback_enabledisable'), 'plugin__linkback_toggle', 'edit', (($data['send']) ? array('checked' => 'checked') : array())));
-		$form->insertElement($pos + 2, form_makeCloseTag('div'));
+        $form = $event->data;
+        $pos = $form->findElementById('wiki__editbar');
+        $form->insertElement($pos, form_makeOpenTag('div', array('id'=>'plugin__linkback_wrapper')));
+        $form->insertElement($pos + 1, form_makeCheckboxField('plugin__linkback_toggle', '1', $this->getLang('linkback_enabledisable'), 'plugin__linkback_toggle', 'edit', (($data['send']) ? array('checked' => 'checked') : array())));
+        $form->insertElement($pos + 2, form_makeCloseTag('div'));
     }
 
     /**

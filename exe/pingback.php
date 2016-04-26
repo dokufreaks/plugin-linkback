@@ -127,13 +127,13 @@ class PingbackServer extends IXR_Server {
             io_saveFile($file, serialize($data));
             $this->tools->addLogEntry($linkback['received'], $ID, 'cl', '', $linkback['lid']);
             $this->tools->notify($ID, $linkback);
-	        if ($this->tools->getConf('log_processing'))
-	        	$this->tools->addProcessLogEntry($evt_data['log']);
+            if ($this->tools->getConf('log_processing'))
+                $this->tools->addProcessLogEntry($evt_data['log']);
             $event->advise_after();
         } else {
             // Pingback was denied
-	        if ($this->tools->getConf('log_processing'))
-	        	$this->tools->addProcessLogEntry($evt_data['log']);
+            if ($this->tools->getConf('log_processing'))
+                $this->tools->addProcessLogEntry($evt_data['log']);
             $event->advise_after();
             return new IXR_Error(PINGBACK_ERROR_ACCESS_DENIED, $helper->getLang('error_noreason'));
         }

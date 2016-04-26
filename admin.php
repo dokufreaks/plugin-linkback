@@ -13,17 +13,6 @@ require_once(DOKU_PLUGIN.'admin.php');
  
 class admin_plugin_linkback extends DokuWiki_Admin_Plugin {
  
-  function getInfo(){
-    return array(
-      'author' => 'Gina Häußge',
-      'email'  => 'osd@foosel.net',
-      'date' => @file_get_contents(DOKU_PLUGIN.'linkback/VERSION'),
-      'name'   => 'Linkback Plugin (admin component)',
-      'desc'   => 'Moderate linkbacks',
-      'url'    => 'http://foosel.net/snippets/dokuwiki/linkback',
-    );
-  }
-
   function getMenuSort(){ return 201; }
   function forAdminOnly(){ return false; }
   
@@ -198,8 +187,8 @@ class admin_plugin_linkback extends DokuWiki_Admin_Plugin {
 
     $result = array();
     foreach($data['receivedpings'] as $lid => $linkback) {
-    	$linkback['level'] = 1;
-    	$result[$lid] = $linkback;
+        $linkback['level'] = 1;
+        $result[$lid] = $linkback;
     }
     
     if (empty($result)) return false;
@@ -301,41 +290,41 @@ class admin_plugin_linkback extends DokuWiki_Admin_Plugin {
     $updated = false;
     $updateText = false;
     foreach (array('send', 'receive', 'display') as $key) {
-    	if (!isset($new[$key]))
-    		$new[$key] = false;
-    	
-    	if ($new[$key] == $data[$key])
-    		continue;
-    		
-    	$data[$key] = $new[$key];
-    	$updated = true;
-    	
-    	if (in_array($key, array('send', 'receive')))
-    		$updateText = true;
+        if (!isset($new[$key]))
+            $new[$key] = false;
+
+        if ($new[$key] == $data[$key])
+            continue;
+
+        $data[$key] = $new[$key];
+        $updated = true;
+
+        if (in_array($key, array('send', 'receive')))
+            $updateText = true;
     }
     
     if (!$updated)
-    	return false;
-    
+        return false;
+
     // save the comment metadata file
     io_saveFile($file, serialize($data));
-    
+
     if (!$updateText)
-    	return true;
-    	
+        return true;
+
     // look for ~~LINKBACK~~ command in page file and change it accordingly
     if ($data['receive'] && $data['display'])
-    	$replace = '~~LINKBACK~~';
+        $replace = '~~LINKBACK~~';
     else if (!$data['receive'])
-    	$replace = '~~LINKBACK:closed~~';
+        $replace = '~~LINKBACK:closed~~';
     else 
-    	$replace = '~~LINKBACK:off~~';
+        $replace = '~~LINKBACK:off~~';
     $wiki = preg_replace('/~~LINKBACK([\w:]*)~~/', $replace, rawWiki($ID));
     saveWikiText($ID, $wiki, $this->getLang('statuschanged'), true);
     
     return true;
   }
-    	
+
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :

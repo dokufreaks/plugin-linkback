@@ -25,20 +25,6 @@ if (!defined('NL'))
 class action_plugin_linkback_antispam extends DokuWiki_Action_Plugin {
 
     /**
-     * return some info
-     */
-    function getInfo() {
-        return array (
-            'author' => 'Gina Haeussge',
-            'email' => 'osd@foosel.net',
-            'date' => @file_get_contents(DOKU_PLUGIN.'linkback/VERSION'),
-            'name' => 'Linkback Plugin (basic antispam component)',
-            'desc' => 'Basic antispam measures against linkback spam.',
-            'url' => 'http://wiki.foosel.net/snippets/dokuwiki/linkback',
-        );
-    }
-
-    /**
      * Register the eventhandlers.
      */
     function register(Doku_Event_Handler $controller) {
@@ -54,47 +40,47 @@ class action_plugin_linkback_antispam extends DokuWiki_Action_Plugin {
         $target = $event->data['target'];
 
         if ($this->getConf('antispam_linkcount_enable') && !$this->_clean_linkcount($linkback['raw_excerpt'])) {
-        	$event->data['log'][] = "\tLinkcount exceeded, marked as spam";
+            $event->data['log'][] = "\tLinkcount exceeded, marked as spam";
             $event->data['show'] = false;
             if (!$this->getConf('antispam_linkcount_moderate'))
                 $event->preventDefault();
             else
-            	$event->data['log'][] = "\t -> moderated";
+                $event->data['log'][] = "\t -> moderated";
         } else {
-        	$event->data['log'][] = "\tLinkcount ok, marked as ham";
+            $event->data['log'][] = "\tLinkcount ok, marked as ham";
         }
 
         if ($this->getConf('antispam_wordblock_enable') && !$this->_clean_wordblock($linkback['raw_excerpt'])) {
-        	$event->data['log'][] = "\tWordblock active, marked as spam";
+            $event->data['log'][] = "\tWordblock active, marked as spam";
             $event->data['show'] = false;
             if (!$this->getConf('antispam_wordblock_moderate'))
                 $event->preventDefault();
             else
-            	$event->data['log'][] = "\t -> moderated";
+                $event->data['log'][] = "\t -> moderated";
         } else {
-        	$event->data['log'][] = "\tWordblock ok, marked as ham";
+            $event->data['log'][] = "\tWordblock ok, marked as ham";
         }
 
         if ($this->getConf('antispam_host_enable') && !$this->_clean_host($linkback['url'], $linkback['submitter_ip'])) {
-        	$event->data['log'][] = "\tHosts do not match, marked as spam";
+            $event->data['log'][] = "\tHosts do not match, marked as spam";
             $event->data['show'] = false;
             if (!$this->getConf('antispam_host_moderate'))
                 $event->preventDefault();
             else
-            	$event->data['log'][] = "\t -> moderated";
+                $event->data['log'][] = "\t -> moderated";
         } else {
-        	$event->data['log'][] = "\tHosts ok, marked as ham";
+            $event->data['log'][] = "\tHosts ok, marked as ham";
         }
 
         if ($this->getConf('antispam_link_enable') && !$this->_clean_link($target, $page, $linkback['type'])) {
-        	$event->data['log'][] = "\tURL not contained in linking page, marked as spam";
+            $event->data['log'][] = "\tURL not contained in linking page, marked as spam";
             $event->data['show'] = false;
             if (!$this->getConf('antispam_link_moderate'))
                 $event->preventDefault();
             else
-            	$event->data['log'][] = "\t -> moderated";
+                $event->data['log'][] = "\t -> moderated";
         } else {
-        	$event->data['log'][] = "\tURL found in linking page, marked as ham";
+            $event->data['log'][] = "\tURL found in linking page, marked as ham";
         }
 
         return;
@@ -139,10 +125,10 @@ class action_plugin_linkback_antispam extends DokuWiki_Action_Plugin {
      * Only used for trackbacks (pingbacks get this treatment right on arrival
      * for excerpt extraction anyway...)
      */
-	function _clean_link($targetUri, $page, $type) {
-		if ($type == 'pingback')
-			return true;
-		
+    function _clean_link($targetUri, $page, $type) {
+        if ($type == 'pingback')
+            return true;
+
         $searchurl = preg_quote($targetUri, '!');
         $regex = '!<a[^>]+?href="' . $searchurl . '"[^>]*?>(.*?)</a>!is';
         $regex2 = '!\s(' . $searchurl . ')\s!is';
@@ -161,5 +147,5 @@ class action_plugin_linkback_antispam extends DokuWiki_Action_Plugin {
         }
         
         return true;
-	}
+    }
 }

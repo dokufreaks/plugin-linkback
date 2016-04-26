@@ -97,24 +97,24 @@ class TrackbackServer {
             'type' => 'trackback',  
             'show' => true,
         );
-		$log = array(
-		    date('Y/m/d H:i', time()) . ': Received trackback from ' . $linkback['url'] . ' (' . $linkback['lid'] . ')',
-		);
+        $log = array(
+            date('Y/m/d H:i', time()) . ': Received trackback from ' . $linkback['url'] . ' (' . $linkback['lid'] . ')',
+        );
 
         // Given URL is not an url? Quit
         if (!preg_match("#^([a-z0-9\-\.+]+?)://.*#i", $linkback['url'])) {
-	    $log[] = "\tTrackback URL is invalid";
+        $log[] = "\tTrackback URL is invalid";
             if ($this->tools->getConf('log_processing'))
-		        $this->tools->addProcessLogEntry($log);
-		    $this->_printTrackbackError('Given trackback URL is not an URL.');
+                $this->tools->addProcessLogEntry($log);
+            $this->_printTrackbackError('Given trackback URL is not an URL.');
             return;
         }
 
         // Trackback already done? Quit
         if ($data['receivedpings'][$lid]) {
-	    $log[] = "\tTrackback already received";
+        $log[] = "\tTrackback already received";
             if ($this->tools->getConf('log_processing'))
-		        $this->tools->addProcessLogEntry($log);
+                $this->tools->addProcessLogEntry($log);
             $this->_printTrackbackError('Trackback already received.');
             return;
         }
@@ -122,13 +122,13 @@ class TrackbackServer {
         // Source does not exist? Quit
         $page = $this->tools->getPage($linkback['url']);
         if (!$page['success'] && ($page['status'] < 200 || $page['status'] >= 300)) {
-	    $log[] = "\tLinked page cannot be reached, status " .$page['status'];
+        $log[] = "\tLinked page cannot be reached, status " .$page['status'];
             if ($this->tools->getConf('log_processing'))
-		        $this->tools->addProcessLogEntry($log);
+                $this->tools->addProcessLogEntry($log);
             $this->_printTrackbackError('Linked page cannot be reached ('.$page['error'].').');
             return;
         }
-		
+
         // Prepare event for Antispam plugins
         $evt_data = array (
             'linkback' => $linkback,

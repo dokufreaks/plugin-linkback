@@ -25,20 +25,6 @@ if (!defined('NL'))
 class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
 
     /**
-     * return some info
-     */
-    function getInfo() {
-        return array (
-            'author' => 'Gina Haeussge',
-            'email' => 'osd@foosel.net',
-            'date' => @file_get_contents(DOKU_PLUGIN.'linkback/VERSION'),
-            'name' => 'Linkback Plugin (receive component)',
-            'desc' => 'Injects autodiscovery-code into output.',
-            'url' => 'http://wiki.foosel.net/snippets/dokuwiki/linkback',
-        );
-    }
-
-    /**
      * Register the eventhandlers.
      */
     function register(Doku_Event_Handler $controller) {

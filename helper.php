@@ -19,17 +19,6 @@ if (!defined('DOKU_TAB'))
 
 class helper_plugin_linkback extends DokuWiki_Plugin {
 
-    function getInfo() {
-        return array (
-            'author' => 'Gina Haeussge',
-            'email' => 'osd@foosel.net',
-            'date' => @file_get_contents(DOKU_PLUGIN.'linkback/VERSION'),
-            'name' => 'Linkback Plugin (helper class)',
-            'desc' => 'Functions to get info about linkbacks to a wiki page',
-            'url' => 'http://wiki.foosel.net/snippets/dokuwiki/linkback',
-        );
-    }
-
     function getMethods() {
         $result = array ();
         $result[] = array (
