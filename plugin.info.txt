@@ -1,7 +1,7 @@
 base   linkback
 author Michael Hamann, Gina Häußge
 email  michael@content-space.de
-date   2016-01-16
+date   2016-04-26
 name   Linkback plugin
 desc   Adds Trackback and Pingback support to DokuWiki
 url    http://dokuwiki.org/plugin:linkback
