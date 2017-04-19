@@ -34,7 +34,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
     /**
      * Constructor
      */
-    function action_plugin_linkback_display() {
+    function __construct() {
         $this->tools =& plugin_load('tools', 'linkback');
     }
 

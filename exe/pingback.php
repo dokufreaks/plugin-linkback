@@ -40,9 +40,9 @@ class PingbackServer extends IXR_Server {
     /**
      * Register service and construct helper
      */
-    function PingbackServer() {
+    function __construct() {
         $this->tools =& plugin_load('tools', 'linkback');
-        $this->IXR_Server(array (
+        parent::__construct(array (
             'pingback.ping' => 'this:ping',
             
         ));
