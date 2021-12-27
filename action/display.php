@@ -9,20 +9,7 @@
  * @link       http://wiki.foosel.net/snippets/dokuwiki/linkback
  */
 
-// must be run within Dokuwiki
-if (!defined('DOKU_INC'))
-    die();
-
-if (!defined('DOKU_PLUGIN'))
-    define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
-require_once (DOKU_PLUGIN . 'action.php');
-
-require_once (DOKU_INC . 'inc/common.php');
-require_once (DOKU_INC . 'inc/events.php');
 require_once (DOKU_PLUGIN . 'linkback/tools.php');
-
-if (!defined('NL'))
-    define('NL', "\n");
 
 class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
 
