@@ -8,18 +8,6 @@
  * @link       http://wiki.foosel.net/snippets/dokuwiki/linkback
  */
 
-// must be run within Dokuwiki
-if (!defined('DOKU_INC'))
-    die();
-
-if (!defined('DOKU_LF'))
-    define('DOKU_LF', "\n");
-if (!defined('DOKU_TAB'))
-    define('DOKU_TAB', "\t");
-
-require_once (DOKU_INC . 'inc/init.php');
-require_once (DOKU_INC . 'inc/common.php');
-require_once (DOKU_INC . 'inc/mail.php');
 require_once (DOKU_PLUGIN . 'linkback/http.php');
 
 class tools_plugin_linkback extends DokuWiki_Plugin {
