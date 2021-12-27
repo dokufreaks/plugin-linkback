@@ -1,10 +1,4 @@
 <?php
-if (!defined('DOKU_INC'))
-    define('DOKU_INC', realpath(dirname(__FILE__) . '/../../../') . '/');
-
-require_once (DOKU_INC . 'inc/HTTPClient.php');
-
-define('HTTP_NL', "\r\n");
 
 /**
  * Modifies sendRequest. If max_bodysize_limit is set to true, the size of
