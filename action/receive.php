@@ -2,25 +2,11 @@
 
 /**
  * Receive component of the DokuWiki Linkback action plugin.
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Gina Haeussge <osd@foosel.net>
  * @link       http://wiki.foosel.net/snippets/dokuwiki/linkback
  */
-
-// must be run within Dokuwiki
-if (!defined('DOKU_INC'))
-    die();
-
-if (!defined('DOKU_PLUGIN'))
-    define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
-require_once (DOKU_PLUGIN . 'action.php');
-
-require_once (DOKU_INC . 'inc/common.php');
-require_once (DOKU_INC . 'inc/template.php');
-
-if (!defined('NL'))
-    define('NL', "\n");
 
 class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
 
@@ -56,7 +42,7 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
             'sentpings' => array (),
             'receivedpings' => array (),
             'number' => 0,
-            
+
         );
         if (@ file_exists($file))
             $data = unserialize(io_readFile($file, false));
@@ -68,7 +54,7 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
         // if trackbacks are enabled, insert RDF definition of trackback into output
         if ($this->getConf('enable_trackback')) {
             echo '<!--<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"' . NL .
-            'xmlns:dc="http://purl.org/dc/elements/1.1/"' . NL .
+            'xmlns:dc="https://purl.org/dc/elements/1.1/"' . NL .
             'xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">' . NL .
             '<rdf:Description' . NL .
             'rdf:about="' . wl($ID, '', true) . '"' . NL .
@@ -98,7 +84,7 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
             'sentpings' => array (),
             'receivedpings' => array (),
             'number' => 0,
-            
+
         );
         if (@ file_exists($file))
             $data = unserialize(io_readFile($file, false));
@@ -134,7 +120,7 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
             'sentpings' => array (),
             'receivedpings' => array (),
             'number' => 0,
-            
+
         );
         if (@ file_exists($file))
             $data = unserialize(io_readFile($file, false));

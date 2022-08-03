@@ -2,24 +2,12 @@
 
 /**
  * Internal helper functions for use with the DokuWiki Linkback Plugin.
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Gina Haeussge <osd@foosel.net>
  * @link       http://wiki.foosel.net/snippets/dokuwiki/linkback
  */
 
-// must be run within Dokuwiki
-if (!defined('DOKU_INC'))
-    die();
-
-if (!defined('DOKU_LF'))
-    define('DOKU_LF', "\n");
-if (!defined('DOKU_TAB'))
-    define('DOKU_TAB', "\t");
-
-require_once (DOKU_INC . 'inc/init.php');
-require_once (DOKU_INC . 'inc/common.php');
-require_once (DOKU_INC . 'inc/mail.php');
 require_once (DOKU_PLUGIN . 'linkback/http.php');
 
 class tools_plugin_linkback extends DokuWiki_Plugin {
@@ -79,7 +67,7 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
      * Sends a notify mail on new linkback
      *
      * @param  string $ID       id of the wiki page for which the
-     *                          linkback was received 
+     *                          linkback was received
      * @param  array  $comment  data array of the new linkback
      *
      * @author Andreas Gohr <andi@splitbrain.org>
@@ -103,17 +91,17 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
             '@UNSUBSCRIBE@',
             '@DOKUWIKIURL@',
             '@PAGEURL@',
-            
+
         );
         $replace = array (
             $ID,
             $conf['title'],
-            strftime($conf['dformat'], $linkback['received']), 
-            $linkback['url'], 
-            $linkback['excerpt'], 
-            wl($ID, 'do=unsubscribe', true, '&'), 
+            strftime($conf['dformat'], $linkback['received']),
+            $linkback['url'],
+            $linkback['excerpt'],
+            wl($ID, 'do=unsubscribe', true, '&'),
             DOKU_URL,
-            wl($ID, '', true), 
+            wl($ID, '', true),
         );
         $text = str_replace($search, $replace, $text);
 
@@ -135,8 +123,9 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
 
         $changelog = $conf['metadir'] . '/_linkbacks.changes';
 
-        if (!$date)
+        if (!$date) {
             $date = time(); //use current time if none supplied
+        }
         $remote = $_SERVER['REMOTE_ADDR'];
         $user = $_SERVER['REMOTE_USER'];
 
@@ -218,10 +207,10 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
             return true;
         }
     }
-    
+
     function addProcessLogEntry($data) {
         global $conf;
-    
+
         io_saveFile($conf['cachedir'].'/linkback.log',join("\n",$data)."\n\n",true);
     }
 

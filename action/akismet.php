@@ -8,17 +8,6 @@
  * @author     Andreas Gohr <gohr@cosmocode.de>
  */
 
-// must be run within Dokuwiki
-if (!defined('DOKU_INC'))
-    die();
-
-if (!defined('DOKU_PLUGIN'))
-    define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
-require_once (DOKU_PLUGIN . 'action.php');
-
-require_once (DOKU_INC . 'inc/common.php');
-require_once (DOKU_INC . 'inc/infoutils.php');
-
 class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
 
     /**
@@ -35,8 +24,8 @@ class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
      */
     function handle_linkback_received(Doku_Event $event, $param) {
         $linkback = $event->data['linkback'];
-        
-        $tools =& plugin_load('tools', 'linkback');
+
+        $tools = plugin_load('tools', 'linkback');
 
         if (!$this->getConf('akismet_enable') || !$this->getConf('akismet_apikey'))
             return;
@@ -52,8 +41,6 @@ class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
         } else {
         	$event->data['log'][] = "\tAkismet marked linkback as ham";
         }
-
-        return;
     }
 
     /**
@@ -111,7 +98,7 @@ class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
      * Prepares the data to send to Akismet
      */
     function _prepareData($linkback) {
-        $data = array (
+        return array (
             'blog' => DOKU_URL,
             'user_ip' => $linkback['submitter_ip'],
             'user_agent' => $linkback['submitter_useragent'],
@@ -120,27 +107,24 @@ class action_plugin_linkback_akismet extends DokuWiki_Action_Plugin {
             'comment_type' => $linkback['type'],
             'comment_content' => $linkback['raw_excerpt'],
         );
-
-        return $data;
     }
 
     /**
      * Submits the given data to the given Akismet service.
-     * 
-     * @param $function string  Akismet service to use. Can be 
-     *                          'comment-check', 'submit-ham' or 
+     *
+     * @param string $function Akismet service to use. Can be
+     *                          'comment-check', 'submit-ham' or
      *                          'submit-spam'
-     * @param $data     array   Linkback data to submit
-     * @return          string  The response of Akismet 
+     * @param array $data Linkback data to submit
+     * @return          string  The response of Akismet
      */
     function _submitData($function, $data) {
         $info = $this->getInfo();
-        $http = new DokuHTTPClient();
+        $http = new dokuwiki\HTTP\DokuHTTPClient();
         // The Aksimet guys ask for a verbose UserAgent:
         $http->agent = 'DokuWiki/' . getVersion() . ' | ' . $info['name'] . '/' . $info['date'];
         $http->timeout = 5;
-        $resp = $http->post('http://' . $this->getConf('akismet_apikey') . '.rest.akismet.com/1.1/comment-check', $data);
-        return $resp;
+        return $http->post('https://' . $this->getConf('akismet_apikey') . '.rest.akismet.com/1.1/comment-check', $data);
     }
 
 }

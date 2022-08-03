@@ -2,25 +2,11 @@
 
 /**
  * Basic antispam features for the DokuWiki Linkback Plugin.
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Gina Haeussge <osd@foosel.net>
  * @link       http://wiki.foosel.net/snippets/dokuwiki/linkback
  */
-
-// must be run within Dokuwiki
-if (!defined('DOKU_INC'))
-    die();
-
-if (!defined('DOKU_PLUGIN'))
-    define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
-require_once (DOKU_PLUGIN . 'action.php');
-
-require_once (DOKU_INC . 'inc/common.php');
-require_once (DOKU_INC . 'inc/infoutils.php');
-
-if (!defined('NL'))
-    define('NL', "\n");
 
 class action_plugin_linkback_antispam extends DokuWiki_Action_Plugin {
 
@@ -82,11 +68,9 @@ class action_plugin_linkback_antispam extends DokuWiki_Action_Plugin {
         } else {
             $event->data['log'][] = "\tURL found in linking page, marked as ham";
         }
-
-        return;
     }
 
-    /**    
+    /**
      * Check against linkcount limit.
      */
     function _clean_linkcount($excerpt) {
@@ -118,10 +102,10 @@ class action_plugin_linkback_antispam extends DokuWiki_Action_Plugin {
         $source_addr = gethostbyname($urlparts['host']);
         return ($source_addr == $remote_addr);
     }
-    
+
     /**
      * Check whether linking page contains link to us.
-     * 
+     *
      * Only used for trackbacks (pingbacks get this treatment right on arrival
      * for excerpt extraction anyway...)
      */
@@ -135,7 +119,7 @@ class action_plugin_linkback_antispam extends DokuWiki_Action_Plugin {
         if (!preg_match($regex, $page['body'], $match) && !preg_match($regex2, $page['body'], $match)) {
             if ($this->getConf('ping_internal') && (strstr($targetUri, DOKU_URL) == $targetUri)) {
                 $ID = substr($_SERVER['PATH_INFO'], 1);
-                $searchurl = preg_quote(wl($ID, '', false), '!');
+                $searchurl = preg_quote(wl($ID), '!');
 
                 $regex = '!<a[^>]+?href="' . $searchurl . '"[^>]*?>(.*?)</a>!is';
                 $regex2 = '!\s(' . $searchurl . ')\s!is';
@@ -145,7 +129,7 @@ class action_plugin_linkback_antispam extends DokuWiki_Action_Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 }

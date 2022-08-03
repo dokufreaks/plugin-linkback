@@ -1,20 +1,14 @@
 <?php
-if (!defined('DOKU_INC'))
-    define('DOKU_INC', realpath(dirname(__FILE__) . '/../../../') . '/');
-
-require_once (DOKU_INC . 'inc/HTTPClient.php');
-
-define('HTTP_NL', "\r\n");
 
 /**
  * Modifies sendRequest. If max_bodysize_limit is set to true, the size of
  * the retrieved body is limited to the value set in max_bodysize.
- * 
+ *
  * Also, modifies get and post to allow response codes in the 200 range.
  *
  * @author Gina Haeussge <osd@foosel.net>
  */
-class LinkbackHTTPClient extends DokuHTTPClient {
+class LinkbackHTTPClient extends \dokuwiki\HTTP\DokuHTTPClient {
 
     var $max_bodysize_limit = false;
 
@@ -37,7 +31,7 @@ class LinkbackHTTPClient extends DokuHTTPClient {
         if($this->status < 200 || $this->status > 206) return false;
         return $this->resp_body;
     }
-    
+
     /**
      * Simple function to do a POST request
      *
@@ -84,7 +78,6 @@ class LinkbackHTTPClient extends DokuHTTPClient {
                 $port = 8080;
         } else {
             $request_url = $path;
-            $server = $server;
             if (empty ($port))
                 $port = ($uri['scheme'] == 'https') ? 443 : 80;
         }
@@ -99,8 +92,9 @@ class LinkbackHTTPClient extends DokuHTTPClient {
         $headers['User-Agent'] = $this->agent;
         $headers['Referer'] = $this->referer;
         $headers['Connection'] = 'Close';
+        $post = '';
         if ($method == 'POST') {
-            $post = $this->_postEncode($data);
+            $post = $this->postEncode($data);
             $headers['Content-Type'] = 'application/x-www-form-urlencoded';
             $headers['Content-Length'] = strlen($post);
         }
@@ -117,7 +111,7 @@ class LinkbackHTTPClient extends DokuHTTPClient {
         // open socket
         $socket = @ fsockopen($server, $port, $errno, $errstr, $this->timeout);
         if (!$socket) {
-            $resp->status = '-100';
+            $this->status = '-100';
             $this->error = "Could not connect to $server:$port\n$errstr ($errno)";
             return false;
         }
@@ -126,12 +120,12 @@ class LinkbackHTTPClient extends DokuHTTPClient {
 
         // build request
         $request = "$method $request_url HTTP/" . $this->http . HTTP_NL;
-        $request .= $this->_buildHeaders($headers);
-        $request .= $this->_getCookies();
+        $request .= $this->buildHeaders($headers);
+        $request .= $this->getCookies();
         $request .= HTTP_NL;
         $request .= $post;
 
-        $this->_debug('request', $request);
+        $this->debug('request', $request);
 
         // send request
         fputs($socket, $request);
@@ -150,14 +144,15 @@ class LinkbackHTTPClient extends DokuHTTPClient {
             $r_headers .= fread($socket, 1); #FIXME read full lines here?
         } while (!preg_match('/\r\n\r\n$/', $r_headers));
 
-        $this->_debug('response headers', $r_headers);
+        $this->debug('response headers', $r_headers);
 
         // check if expected body size exceeds allowance
         if ($this->max_bodysize && preg_match('/\r\nContent-Length:\s*(\d+)\r\n/i', $r_headers, $match)) {
             if ($match[1] > $this->max_bodysize) {
                 $this->error = 'Reported content length exceeds allowed response size';
-                if (!$this->max_bodysize_limit)
+                if (!$this->max_bodysize_limit) {
                     return false;
+                }
             }
         }
 
@@ -169,15 +164,15 @@ class LinkbackHTTPClient extends DokuHTTPClient {
         $this->status = $m[2];
 
         // handle headers and cookies
-        $this->resp_headers = $this->_parseHeaders($r_headers);
+        $this->resp_headers = $this->parseHeaders($r_headers);
         if (isset ($this->resp_headers['set-cookie'])) {
-            foreach ((array) $this->resp_headers['set-cookie'] as $c) {
+            foreach ((array) $this->resp_headers['set-cookie'] as $cookie) {
                 list ($key, $value, $foo) = explode('=', $cookie);
                 $this->cookies[$key] = $value;
             }
         }
 
-        $this->_debug('Object headers', $this->resp_headers);
+        $this->debug('Object headers', $this->resp_headers);
 
         // check server status code to follow redirect
         if ($this->status == 301 || $this->status == 302) {
@@ -208,7 +203,7 @@ class LinkbackHTTPClient extends DokuHTTPClient {
 
         //read body (with chunked encoding if needed)
         $r_body = '';
-        if (preg_match('/transfer\-(en)?coding:\s*chunked\r\n/i', $r_header)) {
+        if (preg_match('/transfer\-(en)?coding:\s*chunked\r\n/i', $r_headers)) {
             do {
                 unset ($chunk_size);
                 do {
@@ -229,15 +224,17 @@ class LinkbackHTTPClient extends DokuHTTPClient {
                 $chunk_size = hexdec($chunk_size);
                 $this_chunk = fread($socket, $chunk_size);
                 $r_body .= $this_chunk;
-                if ($chunk_size)
+                if ($chunk_size) {
                     $byte = fread($socket, 2); // read trailing \r\n
+                }
 
                 if ($this->max_bodysize && strlen($r_body) > $this->max_bodysize) {
                     $this->error = 'Allowed response size exceeded';
-                    if ($this->max_bodysize_limit)
+                    if ($this->max_bodysize_limit) {
                         break;
-                    else
+                    } else {
                         return false;
+                    }
                 }
             }
             while ($chunk_size);
@@ -252,10 +249,11 @@ class LinkbackHTTPClient extends DokuHTTPClient {
                 $r_body .= fread($socket, 4096);
                 if ($this->max_bodysize && strlen($r_body) > $this->max_bodysize) {
                     $this->error = 'Allowed response size exceeded';
-                    if ($this->max_bodysize_limit)
+                    if ($this->max_bodysize_limit) {
                         break;
-                    else
+                    } else {
                         return false;
+                    }
                 }
             }
         }
@@ -271,7 +269,7 @@ class LinkbackHTTPClient extends DokuHTTPClient {
             $this->resp_body = $r_body;
         }
 
-        $this->_debug('response body', $this->resp_body);
+        $this->debug('response body', $this->resp_body);
         $this->redirect_count = 0;
         return true;
     }

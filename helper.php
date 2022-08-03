@@ -3,19 +3,10 @@
 
 /**
  * Linkback helper plugin
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Gina Haeussge <osd@foosel.net>
  */
-
-// must be run within Dokuwiki
-if (!defined('DOKU_INC'))
-    die();
-
-if (!defined('DOKU_LF'))
-    define('DOKU_LF', "\n");
-if (!defined('DOKU_TAB'))
-    define('DOKU_TAB', "\t");
 
 class helper_plugin_linkback extends DokuWiki_Plugin {
 
@@ -71,15 +62,18 @@ class helper_plugin_linkback extends DokuWiki_Plugin {
             $linkbacks = unserialize(io_readFile($lfile, false));
 
             $number = $linkbacks['number'];
-            if (!$linkbacks['display'])
+            if (!$linkbacks['display']) {
                 return '';
+            }
         }
 
-        if ($number == 0)
+        if ($number == 0) {
             $linkback = '0&nbsp;' . $this->getLang('linkback_plural');
-        elseif ($number == 1) $linkback = '1&nbsp;' . $this->getLang('linkback_singular');
-        else
+        } elseif ($number == 1) {
+            $linkback = '1&nbsp;' . $this->getLang('linkback_singular');
+        } else {
             $linkback = $number . '&nbsp;' . $this->getLang('linkback_plural');
+        }
 
         return '<a href="' . wl($ID) . $section . '" class="wikilink1" title="' . $ID . $section . '">' .
         $linkback . '</a>';
@@ -93,17 +87,20 @@ class helper_plugin_linkback extends DokuWiki_Plugin {
         global $conf;
 
         $first = $_REQUEST['first'];
-        if (!is_numeric($first))
+        if (!is_numeric($first)) {
             $first = 0;
+        }
 
-        if ((!$num) || (!is_numeric($num)))
+        if ((!$num) || (!is_numeric($num))) {
             $num = $conf['recent'];
+        }
 
         $result = array ();
         $count = 0;
 
-        if (!@ file_exists($conf['metadir'] . '/_linkbacks.changes'))
+        if (!@ file_exists($conf['metadir'] . '/_linkbacks.changes')) {
             return $result;
+        }
 
         // read all recent changes. (kept short)
         $lines = file($conf['metadir'] . '/_linkbacks.changes');
@@ -112,13 +109,15 @@ class helper_plugin_linkback extends DokuWiki_Plugin {
         for ($i = count($lines) - 1; $i >= 0; $i--) {
             $rec = $this->_handleRecentLinkback($lines[$i], $ns);
             if ($rec !== false) {
-                if (-- $first >= 0)
-                    continue; // skip first entries
+                if (-- $first >= 0) {
+                    continue;
+                } // skip first entries
                 $result[$rec['date']] = $rec;
                 $count++;
                 // break when we have enough entries
-                if ($count >= $num)
+                if ($count >= $num) {
                     break;
+                }
             }
         }
 
@@ -141,57 +140,68 @@ class helper_plugin_linkback extends DokuWiki_Plugin {
      */
     function _handleRecentLinkback($line, $ns) {
         static $seen = array (); //caches seen pages and skip them
-        if (empty ($line))
+        if (empty ($line)) {
             return false; //skip empty lines
+        }
 
         // split the line into parts
         $recent = parseChangelogLine($line);
-        if ($recent === false)
+        if ($recent === false) {
             return false;
+        }
 
         $lid = $recent['extra'];
         $fulllid = $recent['id'] . '#' . $recent['extra'];
 
         // skip seen ones
-        if (isset ($seen[$fulllid]))
+        if (isset ($seen[$fulllid])) {
             return false;
+        }
 
         // skip 'show comment' log entries
-        if ($recent['type'] === 'sc')
+        if ($recent['type'] === 'sc') {
             return false;
+        }
 
         // remember in seen to skip additional sights
         $seen[$fulllid] = 1;
 
         // check if it's a hidden page or comment
-        if (isHiddenPage($recent['id']))
+        if (isHiddenPage($recent['id'])) {
             return false;
-        if ($recent['type'] === 'hl')
+        }
+        if ($recent['type'] === 'hl') {
             return false;
+        }
 
         // filter namespace or id
-        if (($ns) && (strpos($recent['id'] . ':', $ns . ':') !== 0))
+        if (($ns) && (strpos($recent['id'] . ':', $ns . ':') !== 0)) {
             return false;
+        }
 
         // check ACL
         $recent['perm'] = auth_quickaclcheck($recent['id']);
-        if ($recent['perm'] < AUTH_READ)
+        if ($recent['perm'] < AUTH_READ) {
             return false;
+        }
 
         // check existance
         $recent['file'] = wikiFN($recent['id']);
         $recent['exists'] = @ file_exists($recent['file']);
-        if (!$recent['exists'])
+        if (!$recent['exists']) {
             return false;
-        if ($recent['type'] === 'dc')
+        }
+        if ($recent['type'] === 'dc') {
             return false;
+        }
 
         // get linkback meta file name
         $data = unserialize(io_readFile(metaFN($recent['id'], '.linkbacks'), false));
 
         // check if discussion is turned off
-        if (!$data['display'])
+        if (!$data['display']) {
             return false;
+        }
 
         // okay, then add some additional info
         $recent['name'] = $data['receivedpings'][$lid]['url'];

@@ -3,31 +3,19 @@
 /**
  * Display component of the DokuWiki Linkback action plugin. Highly influenced by
  * the discussion plugin of Esther Brunner.
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Gina Haeussge <osd@foosel.net>
  * @link       http://wiki.foosel.net/snippets/dokuwiki/linkback
  */
 
-// must be run within Dokuwiki
-if (!defined('DOKU_INC'))
-    die();
-
-if (!defined('DOKU_PLUGIN'))
-    define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
-require_once (DOKU_PLUGIN . 'action.php');
-
-require_once (DOKU_INC . 'inc/common.php');
-require_once (DOKU_INC . 'inc/events.php');
 require_once (DOKU_PLUGIN . 'linkback/tools.php');
-
-if (!defined('NL'))
-    define('NL', "\n");
 
 class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
 
     /**
      * A little helper.
+     * @var helper_plugin_linkback
      */
     var $tools;
 
@@ -35,7 +23,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
      * Constructor
      */
     function __construct() {
-        $this->tools =& plugin_load('tools', 'linkback');
+        $this->tools = plugin_load('tools', 'linkback');
     }
 
     /**
@@ -51,7 +39,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
      */
     function handle_act_render(Doku_Event $event, $params) {
         global $ID, $INFO;
-        
+
         if ($event->data != 'show')
             return;
 
@@ -63,7 +51,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
             'sentpings' => array (),
             'receivedpings' => array (),
             'number' => 0,
-            
+
         );
 
         if (@ file_exists($file))
@@ -108,7 +96,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
         if (!$data['display'])
             return;
 
-        if ((count($data['receivedpings']) == 0) && 
+        if ((count($data['receivedpings']) == 0) &&
                 (!$this->getConf('show_trackback_url') || !$this->getConf('enable_trackback')))
             return;
 
@@ -133,26 +121,24 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
 
         echo '</div>'; // level2
         echo '</div>'; // comment_wrapper
-
-        return true;
     }
 
     /**
      * Prints an individual linkback
      */
     function _print($lid, $linkback, $visible = true) {
-        global $ID;
         global $INFO;
         global $conf;
 
         if (!is_array($linkback))
-            return false; // corrupt datatype
+            return; // corrupt datatype
 
         if (!$linkback['show']) { // linkback hidden
-            if ($INFO['perm'] == AUTH_ADMIN)
+            if ($INFO['perm'] == AUTH_ADMIN) {
                 echo '<div class="linkback_hidden">' . NL;
-            else
-                return true;
+            } else {
+                return;
+            }
         }
 
         $title = $linkback['title'];
@@ -169,8 +155,9 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
 
         // show favicon image
         if ($this->getConf('usefavicon')) {
-            if (!$icon)
+            if (!$icon) {
                 $icon = $this->getConf('favicon_default');
+            }
 
             $size = 16;
             $src = ml($icon);
@@ -197,10 +184,11 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
 
         echo '<div class="linkback_buttons">' . NL;
         if ($INFO['perm'] == AUTH_ADMIN) {
-            if (!$linkback['show'])
+            if (!$linkback['show']) {
                 $label = $this->getLang('btn_show');
-            else
+            } else {
                 $label = $this->getLang('btn_hide');
+            }
 
             $this->_button($lid, $label, 'linkback_toggle');
             $this->_button($lid, $this->getLang('btn_ham'), 'linkback_ham');
@@ -211,13 +199,14 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
 
         echo '<div class="linkback_line" ' . ($this->getConf('usefavicon') ? $style : '') . '>&nbsp;</div>' . NL;
 
-        if (!$linkback['show'])
+        if (!$linkback['show']) {
             echo '</div>' . NL; // class="linkback_hidden"
+        }
     }
 
     /**
-     * General button function. 
-     * 
+     * General button function.
+     *
      * Code mostly taken from the discussion plugin by Esther Brunner.
      */
     function _button($lid, $label, $act) {
@@ -240,7 +229,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
 
     /**
      * Adds a TOC entry for the linkback section.
-     * 
+     *
      * Code mostly taken from the discussion plugin by Esther Brunner.
      */
     function handle_content_postprocess(Doku_Event $event, $params) {
@@ -252,7 +241,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
 
         $file = metaFN($ID, '.linkbacks');
         if (!@ file_exists($file))
-            return false;
+            return;
         $data = unserialize(io_readFile($file, false));
         if (!$data['display'] || (count($data['receivedpings']) == 0))
             return; // no linkback section
@@ -276,7 +265,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
         $new = str_replace($search, $item . $search, $match[0]);
         $event->data[1] = preg_replace($pattern, $new, $event->data[1]);
     }
-    
+
     function _changeLinkbackVisibilities($lids, $visible) {
         global $ID;
 
@@ -288,16 +277,16 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
             'sentpings' => array (),
             'receivedpings' => array (),
             'number' => 0,
-            
+
         );
 
         if (@ file_exists($file))
             $data = unserialize(io_readFile($file, false));
         $update = false;
-            
+
         foreach ($lids as $lid) {
             $linkback = $data['receivedpings'][$lid];
-            if ($linkback['show'] == $visible) 
+            if ($linkback['show'] == $visible)
                 continue;
 
             $linkback['show'] = $visible;
@@ -326,7 +315,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
             'sentpings' => array (),
             'receivedpings' => array (),
             'number' => 0,
-            
+
         );
 
         if (@ file_exists($file))
@@ -346,7 +335,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
             io_saveFile($file, serialize($data));
         return $data;
     }
-    
+
     function _markLinkbacks($lids, $isSpam) {
         global $ID;
 
@@ -358,12 +347,12 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
             'sentpings' => array (),
             'receivedpings' => array (),
             'number' => 0,
-            
+
         );
 
         if (@ file_exists($file))
             $data = unserialize(io_readFile($file, false));
-            
+
         foreach ($lids as $lid) {
             $linkback = $data['receivedpings'][$lid];
             if ($isSpam)
@@ -372,5 +361,5 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
                 trigger_event('ACTION_LINKBACK_HAM', $linkback);
         }
     }
-    
+
 }
