@@ -9,6 +9,8 @@
  * @link       http://wiki.foosel.net/snippets/dokuwiki/linkback
  */
 
+use dokuwiki\Extension\Event;
+
 require_once (DOKU_PLUGIN . 'linkback/tools.php');
 
 class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
@@ -355,10 +357,11 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
 
         foreach ($lids as $lid) {
             $linkback = $data['receivedpings'][$lid];
-            if ($isSpam)
-                trigger_event('ACTION_LINKBACK_SPAM', $linkback);
-            else
-                trigger_event('ACTION_LINKBACK_HAM', $linkback);
+            if ($isSpam) {
+                Event::createAndTrigger('ACTION_LINKBACK_SPAM', $linkback);
+            } else {
+                Event::createAndTrigger('ACTION_LINKBACK_HAM', $linkback);
+            }
         }
     }
 
