@@ -103,8 +103,11 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
 
         $subject = '[' . $conf['title'] . '] ' . $this->getLang('mail_newlinkback');
 
-        mail_send($to, $subject, $text, $conf['mailfrom'], '');
-
+        $mail = new Mailer();
+        $mail->to($to);
+        $mail->subject($subject);
+        $mail->setBody($text);
+        $mail->send();
     }
 
     /**

@@ -14,15 +14,15 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
      * Register the eventhandlers.
      */
     function register(Doku_Event_Handler $controller) {
-        $controller->register_hook('TPL_ACT_RENDER', 'BEFORE', $this, 'handle_act_render', array ());
-        $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'handle_metaheader_output', array ());
-        $controller->register_hook('ACTION_HEADERS_SEND', 'BEFORE', $this, 'handle_headers_send', array ());
+        $controller->register_hook('TPL_ACT_RENDER', 'BEFORE', $this, 'addTrackbackLink', array ());
+        $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'addPingbackLinkToMetaheader', array ());
+        $controller->register_hook('ACTION_HEADERS_SEND', 'BEFORE', $this, 'addPingbackLinkToHTTPHeader', array ());
     }
 
     /**
      * Handler for the TPL_ACT_RENDER event
      */
-    function handle_act_render(Doku_Event $event, $params) {
+    function addTrackbackLink(Doku_Event $event, $params) {
         global $ID;
 
         // Action not 'show'? Quit
@@ -71,7 +71,7 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
      * @param $params
      * @return bool|void
      */
-    function handle_metaheader_output(Doku_Event $event, $params) {
+    function addPingbackLinkToMetaheader(Doku_Event $event, $params) {
         global $ID;
 
         // Pingbacks disabled? Quit
@@ -111,7 +111,7 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
      * @param $params
      * @return bool|void
      */
-    function handle_headers_send(Doku_Event $event, $params) {
+    function addPingbackLinkToHTTPHeader(Doku_Event $event, $params) {
         global $ID;
 
         // Pingbacks disabled? Quit
