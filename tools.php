@@ -12,10 +12,6 @@ require_once (DOKU_PLUGIN . 'linkback/http.php');
 
 class tools_plugin_linkback extends DokuWiki_Plugin {
 
-    function DokuWiki_Linkback_Interface() {
-        $this->DokuWiki_Plugin();
-    }
-
     /**
      * Retrieves a favicon for the given page.
      */
@@ -68,7 +64,7 @@ class tools_plugin_linkback extends DokuWiki_Plugin {
      *
      * @param  string $ID       id of the wiki page for which the
      *                          linkback was received
-     * @param  array  $comment  data array of the new linkback
+     * @param  array  $linkback  data array of the new linkback
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Esther Brunner <wikidesign@gmail.com>

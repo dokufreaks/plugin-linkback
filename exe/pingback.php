@@ -139,7 +139,7 @@ class PingbackServer extends Server{
             if ($this->tools->getConf('log_processing'))
                 $this->tools->addProcessLogEntry($evt_data['log']);
             $event->advise_after();
-            return new Error(PINGBACK_ERROR_ACCESS_DENIED, $helper->getLang('error_noreason'));
+            return new Error(PINGBACK_ERROR_ACCESS_DENIED, $this->tools->getLang('error_noreason'));
         }
     }
 

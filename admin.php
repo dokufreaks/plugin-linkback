@@ -76,8 +76,12 @@ class admin_plugin_linkback extends DokuWiki_Admin_Plugin {
       echo html_buildlist($linkbacks, 'admin_linkback', array($this, '_linkbackItem'), array($this, '_li_linkback'));
       $this->_actionButtons($target['id']);
     }
+
     $this->_browseLinkbackLinks($more, $first, $num);
 
+    if(count($targets) === 0) {
+        echo 'No linkback targets';
+    }
   }
 
   /**
@@ -85,8 +89,6 @@ class admin_plugin_linkback extends DokuWiki_Admin_Plugin {
    */
   function _getTargets(){
     global $conf;
-
-    require_once(DOKU_INC.'inc/search.php');
 
     // returns the list of pages in the given namespace and it's subspaces
     $items = array();
