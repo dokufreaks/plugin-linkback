@@ -283,6 +283,7 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
      *
      * @param string $pingurl URL to ping
      * @param array $linkback_info Hash containing title, url and blog_name of linking post
+     * @return bool
      */
     function _ping_page_trackback($pingurl, $linkback_info) {
         $http_client = new \dokuwiki\HTTP\DokuHTTPClient();
@@ -295,13 +296,16 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
      *
      * @param array $headers the headers received from to be pinged page.
      * @param string $data the body received from the pinged page.
+     * @return false|string
      */
-    function _autodiscover_pingback($headers, $data) {
-        if (isset ($headers['X-Pingback']))
+    function _autodiscover_pingback(array $headers, string $data) {
+        if (isset ($headers['X-Pingback'])) {
             return $headers['X-Pingback'];
+        }
         $regex = '!<link rel="pingback" href="([^"]+)" ?/?>!';
-        if (!preg_match($regex, $data, $match))
+        if (!preg_match($regex, $data, $match)) {
             return false;
+        }
         return $match[1];
     }
 

@@ -67,6 +67,9 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
 
     /**
      * Handler for the TPL_METAHEADER_OUTPUT event
+     * @param Doku_Event $event
+     * @param $params
+     * @return bool|void
      */
     function handle_metaheader_output(Doku_Event $event, $params) {
         global $ID;
@@ -103,6 +106,10 @@ class action_plugin_linkback_receive extends DokuWiki_Action_Plugin {
 
     /**
      * Handler for the ACTION_HEADERS_SEND event
+     *
+     * @param Doku_Event $event
+     * @param $params
+     * @return bool|void
      */
     function handle_headers_send(Doku_Event $event, $params) {
         global $ID;
