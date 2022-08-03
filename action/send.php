@@ -8,6 +8,7 @@
  * @link       http://wiki.foosel.net/snippets/dokuwiki/linkback
  */
 
+use dokuwiki\Form\Form;
 use IXR\Client\Client;
 
 require_once (DOKU_PLUGIN . 'linkback/http.php');
@@ -21,6 +22,7 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
      */
     function register(Doku_Event_Handler $controller) {
         $controller->register_hook('HTML_EDITFORM_OUTPUT', 'BEFORE', $this, 'handle_editform_output', array ());
+        $controller->register_hook('FORM_EDIT_OUTPUT', 'BEFORE', $this, 'handle_editform_output', array ());
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_action_act_preprocess_before', array());
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'AFTER', $this, 'handle_action_act_preprocess_after', array());
     }
@@ -65,8 +67,9 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
             'number' => 0,
 
         );
-        if (@ file_exists($file))
+        if (@ file_exists($file)) {
             $data = unserialize(io_readFile($file, false));
+        }
         $data['send'] = (bool)$_REQUEST['plugin__linkback_toggle'];
 
         if (!$data['send'])
@@ -176,11 +179,32 @@ class action_plugin_linkback_send extends DokuWiki_Action_Plugin {
             }
         }
 
+        /** @var Form|Doku_Form $form */
         $form = $event->data;
-        $pos = $form->findElementById('wiki__editbar');
-        $form->insertElement($pos, form_makeOpenTag('div', array('id'=>'plugin__linkback_wrapper')));
-        $form->insertElement($pos + 1, form_makeCheckboxField('plugin__linkback_toggle', '1', $this->getLang('linkback_enabledisable'), 'plugin__linkback_toggle', 'edit', (($data['send']) ? array('checked' => 'checked') : array())));
-        $form->insertElement($pos + 2, form_makeCloseTag('div'));
+        if(is_a($form, Form::class)) {
+            /** @var Form $pos */
+            $pos = $form->findPositionByAttribute('id','wiki__editbar');
+
+            $form->addTagOpen('div', $pos);
+
+            //value of an unchecked checkbox is not submitted, set an extra hidden different value to fix prefilling
+            $form->setHiddenField('plugin__linkback_toggle','');
+            $checkbox = $form->addCheckbox('plugin__linkback_toggle', $this->getLang('linkback_enabledisable'), $pos + 1)
+                ->id('plugin__linkback_toggle')
+                ->addClass('edit')
+                ->val('1');
+            if($data['send']) {
+                $checkbox->attr('checked', 'checked');
+            }
+
+            $form->addTagClose('div', $pos + 2);
+
+        } else {
+            $pos = $form->findElementById('wiki__editbar');
+            $form->insertElement($pos, form_makeOpenTag('div', array('id'=>'plugin__linkback_wrapper')));
+            $form->insertElement($pos + 1, form_makeCheckboxField('plugin__linkback_toggle', '1', $this->getLang('linkback_enabledisable'), 'plugin__linkback_toggle', 'edit', (($data['send']) ? array('checked' => 'checked') : array())));
+            $form->insertElement($pos + 2, form_makeCloseTag('div'));
+        }
     }
 
     /**
