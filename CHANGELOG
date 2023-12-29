@@ -26,4 +26,4 @@
   * Receiving and displaying of received linkbacks added, sending improved
   
 * 2007/04/07:
-  * Initial release of the first prototype
+  * Initial release of the first prototype2023-12-28 22:54 - v0.0.1 - Fixed: PHP Warning:  Undefined array key "lid" in [WEBROOT]/lib/plugins/linkback/action/display.php on line 65
