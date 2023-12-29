@@ -28,3 +28,4 @@
 * 2007/04/07:
   * Initial release of the first prototype2023-12-28 22:54 - v0.0.1 - Fixed: PHP Warning:  Undefined array key "lid" in [WEBROOT]/lib/plugins/linkback/action/display.php on line 65
 2023-12-29 11:53 - v0.0.2 - Added Diagnostic Data for Trying to access array offset on value of type bool line 64,65
+2023-12-29 12:03 - v0.0.3 - Adding a check if $linkback was returned.
