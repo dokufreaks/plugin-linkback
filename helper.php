@@ -61,8 +61,12 @@ class helper_plugin_linkback extends DokuWiki_Plugin {
             $lfile = metaFN($ID, '.linkbacks');
             $linkbacks = unserialize(io_readFile($lfile, false));
 
-            $number = $linkbacks['number'];
-            if (!$linkbacks['display']) {
+            if ($linkbacks){
+                $number = $linkbacks['number'];
+                if (!$linkbacks['display']) {
+                    return '';
+                }
+            } else {
                 return '';
             }
         }

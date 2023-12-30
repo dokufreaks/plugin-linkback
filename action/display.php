@@ -62,7 +62,7 @@ class action_plugin_linkback_display extends DokuWiki_Action_Plugin {
         if (!isset ($_REQUEST['linkback']) || $INFO['perm'] != AUTH_ADMIN)
             $_REQUEST['linkback'] = 'linkback_show';
 
-        $lid = $_REQUEST['lid'];
+        $lid = isset($_REQUEST['lid']) ? $_REQUEST['lid'] : '';
         if (!preg_match('![a-zA-Z0-9]!', $lid))
             $_REQUEST['linkback'] = 'linkback_show';
 
