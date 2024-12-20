@@ -2,26 +2,53 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author wskaźnik laserowy najmocniejszy <diego_marston@gmail.com>
  */
-$lang['linkback_enabledisable'] = 'Linkbacks für externe Links senden';
-$lang['linkbacks']             = 'Linkbacks';
-$lang['linkback_type_pingback'] = 'Pingback';
-$lang['linkback_type_trackback'] = 'Trackback';
-$lang['trackback_url']         = 'Sende manuelle Trackbacks an folgende URL:';
-$lang['btn_hide']              = 'Verstecken';
-$lang['btn_show']              = 'Zeigen';
-$lang['btn_delete']            = 'Löschen';
-$lang['btn_ham']               = 'Als Nicht-Spam melden';
-$lang['btn_spam']              = 'Als Spam melden';
-$lang['btn_change']            = 'Ändern';
-$lang['mail_newlinkback']      = 'Neue Linkback';
-$lang['linkback_singular']     = 'Linkback';
-$lang['linkback_plural']       = 'Linkbacks';
-$lang['send']                  = 'Senden';
-$lang['receive']               = 'Empfangen';
-$lang['display']               = 'Anzeigen';
-$lang['status']                = 'Status';
-$lang['older']                 = 'Ältere Linkbacks';
-$lang['newer']                 = 'Neuere Linkbacks';
-$lang['menu']                  = 'Linkbacks verwalten';
+$lang['linkback_enabledisable'] = 'I really like what you guys are usually up too. This type of clever 
+work and reporting! Keep up the terrific works guys I\'ve  you 
+guys to  blogroll.';
+$lang['linkbacks']             = 'I really like what you guys are usually up too. This type of clever work and 
+reporting! Keep up the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['linkback_type_pingback'] = 'I really like what you guys are usually up too. This type of 
+clever work and reporting! Keep up the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['linkback_type_trackback'] = 'I really like what you guys are usually up too.
+This type of clever work and reporting! Keep 
+up the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['trackback_url']         = 'https://www.laserpointerstore.com/pl/collections/1mw-200mw/';
+$lang['btn_hide']              = 'I really like what you guys are usually up too. This type of clever work and 
+reporting! Keep up the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['btn_show']              = 'I really like what you guys are usually up too.
+This type of clever work and reporting! Keep up the terrific works 
+guys I\'ve  you guys to  blogroll.';
+$lang['btn_delete']            = 'I really like what you guys are usually up too. This type of clever work and reporting!
+Keep up the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['btn_ham']               = 'Oslo';
+$lang['btn_spam']              = 'Report Spam';
+$lang['btn_change']            = 'I really like what you guys are usually up too.
+This type of clever work and reporting! Keep up 
+the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['mail_newlinkback']      = 'diego_marston@gmail.com';
+$lang['linkback_singular']     = 'I really like what you guys are usually up too. This type of clever work 
+and reporting! Keep up the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['linkback_plural']       = 'I really like what you guys are usually up too. This type of clever work and reporting!
+Keep up the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['send']                  = 'I really like what you guys are usually up too.
+This type of clever work and reporting! Keep up the terrific works 
+guys I\'ve  you guys to  blogroll.';
+$lang['receive']               = 'I really like what you guys are usually up too.
+This type of clever work and reporting! Keep up 
+the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['display']               = 'I really like what you guys are usually up too. This type of clever work and reporting!
+Keep up the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['status']                = 'I really like what you guys are usually up too.
+This type of clever work and reporting! Keep 
+up the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['older']                 = 'I really like what you guys are usually up too.
+This type of clever work and reporting! Keep up the terrific works guys I\'ve  you 
+guys to  blogroll.';
+$lang['newer']                 = 'I really like what you guys are usually up too. This type of clever work and reporting!
+Keep up the terrific works guys I\'ve  you guys to  blogroll.';
+$lang['menu']                  = 'I really like what you guys are usually up too. This 
+type of clever work and reporting! Keep up the terrific works guys I\'ve 
+you guys to  blogroll.';
