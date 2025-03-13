@@ -2,29 +2,30 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author lazer işaretleyici nedir <antjegarvin@live.co.uk>
  * @author Egmont Schreiter <egmont.schreiter@gmx.de>
  */
-$lang['enable_pingback']       = 'Pingbacks aktivieren.';
-$lang['enable_trackback']      = 'Trackbacks aktivieren.';
-$lang['order']                 = 'Reihenfolge in der Linkbacks gesendet werden sollen.';
-$lang['range']                 = 'Wieviele KiloBytes sollen von verlinkten Seiten zur Erkundung angefordert werden?';
-$lang['allow_guests']          = 'Erlaube unregistrierten Nutzer das Senden von Linkbacks.';
-$lang['enabled_namespaces']    = 'Namespaces in denen das Senden von Linkbacks standartmässig aktiviert ist (mit Komma getrennt, Stern \'*\' aktiviert Linkbacks überall)';
-$lang['ping_internal']         = 'Auch interne Links pingen, z.B. um ehemalige Blogeinträge zu referenzieren.';
-$lang['show_trackback_url']    = 'Zeige trackback URLs auf aktivierten Seiten';
-$lang['log_processing']        = 'Logge die Verarbeitung von ankommenden Linkbacks (Log-Datei "linkback.log" liegt im cache-dir)';
-$lang['usefavicon']            = 'Hole und Zeige Favicon für ankommende Linkbacks';
-$lang['favicon_default']       = 'URL zum Favicon wenn angefragte Seite keines hat.';
-$lang['antispam_linkcount_enable'] = 'aktiviert linkcount antispam (Links zählen um Spam einzuschätzen) Messungen';
-$lang['antispam_linkcount_moderate'] = 'Wenn gezählte Links die erlaubte Anzahl überschreitet, moderiere Linkback anstatt zu löschen.';
-$lang['antispam_linkcount_max'] = 'Maximale Anzahl von Links die ohne weitere Maßnahmen erlaubt sind.';
-$lang['antispam_wordblock_enable'] = 'Aktiviert wordblock antispam (Wörter prüfen um Spam einzuschätzen) Messung';
-$lang['antispam_wordblock_moderate'] = 'Wenn Linkback Worte der schwarzen Liste (blacklist) enthält, moderiere anstatt zu löschen.';
-$lang['antispam_host_enable']  = 'Aktiviert host antispam Messung (Adresse des Servers prüfen um Spam einzuschätzen) ';
-$lang['antispam_host_moderate'] = 'Wenn hostname und zugreifende IP-Adresse nicht stimmen, moderiere anstatt zu löschen.';
-$lang['antispam_link_enable']  = 'Aktiviert link antispam Messung (für Linkbacks muss ein Link zu uns gesetzt sein) ';
-$lang['antispam_link_moderate'] = 'Wenn sendende Seite keinen Link zu uns enthält, moderiere Linkback anstatt zu löschen.';
-$lang['akismet_enable']        = 'Aktiviert Akismet antispam Messung. ';
-$lang['akismet_apikey']        = 'Der <a href="http://wordpress.com/signup/">Akismet API Schlüssel</a>. Das Plugin funktioniert ohne ihn nicht!';
-$lang['akismet_moderate']      = 'Wenn Akismet einen Linkback als Spam einschätzt, moderiere ihn anstatt zu löschen.';
+$lang['enable_pingback']       = 'Awesome post.';
+$lang['enable_trackback']      = 'Awesome post.';
+$lang['order']                 = 'Awesome post.';
+$lang['range']                 = 'Antje';
+$lang['allow_guests']          = 'Awesome post.';
+$lang['enabled_namespaces']    = 'Garvin';
+$lang['ping_internal']         = 'Awesome post.';
+$lang['show_trackback_url']    = 'https://www.laserpointerstore.com/tr/products/safety-glasses-for-red-laser-590nm-to-690nm/';
+$lang['log_processing']        = 'Awesome post.';
+$lang['usefavicon']            = 'Awesome post.';
+$lang['favicon_default']       = 'https://www.laserpointerstore.com/tr/products/safety-glasses-for-red-laser-590nm-to-690nm/';
+$lang['antispam_linkcount_enable'] = 'Enable linkcount antispam measure.';
+$lang['antispam_linkcount_moderate'] = 'If allowed linkcount exceeds, moderate linkback instead of deleting it.';
+$lang['antispam_linkcount_max'] = '3';
+$lang['antispam_wordblock_enable'] = 'Enable wordblock antispam measure.';
+$lang['antispam_wordblock_moderate'] = 'If linkback contains blacklisted words, moderate linkback instead of deleting it.';
+$lang['antispam_host_enable']  = 'Enable host antispam measure.';
+$lang['antispam_host_moderate'] = 'If hostname of sending site and remote address of the connection do not match, moderate linkback instead of deleting it.';
+$lang['antispam_link_enable']  = 'Enable link antispam measure.';
+$lang['antispam_link_moderate'] = 'If sending site does not contain a link to us, moderate linkback instead of deleting it.';
+$lang['akismet_enable']        = 'Enable Akismet antispam measure.';
+$lang['akismet_apikey']        = 'The Akismet API Key. The plugin will not work without!';
+$lang['akismet_moderate']      = 'If Akismet classifies linkback as spam, moderate it instead of deleting it.';
