@@ -1,0 +1,20 @@
+Dobrý deň!
+
+Na stránku @PAGE@ vo wiki @TITLE@ bol pridaný nový linkback. Túto stránku
+nájdete tu:
+@PAGEURL@
+
+Dátum:  @DATE@
+URL:    @URL@
+
+Úryvok:
+--------------------------------------------------------
+@TEXT@
+--------------------------------------------------------
+
+Odber tejto stránky zrušíte prihlásením do wiki a kliknutím na tento odkaz:
+@UNSUBSCRIBE@
+
+--
+Tento e-mail vygenerovala DokuWiki na
+@DOKUWIKIURL@
