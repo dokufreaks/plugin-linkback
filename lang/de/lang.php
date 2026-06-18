@@ -2,26 +2,27 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author lazer işaretleyici nedir <antjegarvin@live.co.uk>
  */
-$lang['linkback_enabledisable'] = 'Linkbacks für externe Links senden';
-$lang['linkbacks']             = 'Linkbacks';
-$lang['linkback_type_pingback'] = 'Pingback';
-$lang['linkback_type_trackback'] = 'Trackback';
-$lang['trackback_url']         = 'Sende manuelle Trackbacks an folgende URL:';
-$lang['btn_hide']              = 'Verstecken';
-$lang['btn_show']              = 'Zeigen';
-$lang['btn_delete']            = 'Löschen';
-$lang['btn_ham']               = 'Als Nicht-Spam melden';
-$lang['btn_spam']              = 'Als Spam melden';
-$lang['btn_change']            = 'Ändern';
-$lang['mail_newlinkback']      = 'Neue Linkback';
-$lang['linkback_singular']     = 'Linkback';
-$lang['linkback_plural']       = 'Linkbacks';
-$lang['send']                  = 'Senden';
-$lang['receive']               = 'Empfangen';
-$lang['display']               = 'Anzeigen';
-$lang['status']                = 'Status';
-$lang['older']                 = 'Ältere Linkbacks';
-$lang['newer']                 = 'Neuere Linkbacks';
-$lang['menu']                  = 'Linkbacks verwalten';
+$lang['linkback_enabledisable'] = 'Awesome post.';
+$lang['linkbacks']             = 'Awesome post.';
+$lang['linkback_type_pingback'] = 'Awesome post.';
+$lang['linkback_type_trackback'] = 'Awesome post.';
+$lang['trackback_url']         = 'https://www.laserpointerstore.com/tr/products/safety-glasses-for-red-laser-590nm-to-690nm/';
+$lang['btn_hide']              = 'Awesome post.';
+$lang['btn_show']              = 'Awesome post.';
+$lang['btn_delete']            = 'Awesome post.';
+$lang['btn_ham']               = 'Neu St. Johann';
+$lang['btn_spam']              = 'Report Spam';
+$lang['btn_change']            = 'Awesome post.';
+$lang['mail_newlinkback']      = 'antjegarvin@live.co.uk';
+$lang['linkback_singular']     = 'Awesome post.';
+$lang['linkback_plural']       = 'Awesome post.';
+$lang['send']                  = 'Awesome post.';
+$lang['receive']               = 'Awesome post.';
+$lang['display']               = 'Awesome post.';
+$lang['status']                = 'Awesome post.';
+$lang['older']                 = 'Awesome post.';
+$lang['newer']                 = 'Awesome post.';
+$lang['menu']                  = 'Awesome post.';
